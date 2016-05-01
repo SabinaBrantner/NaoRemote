@@ -6,24 +6,47 @@
 
 #include <string.h>
 
+int bufferlen = 100000;
+
+void writeDataInFile(char* buffer, int bufferlen);
+
 void handle (int sock) {
    int n;
-   char buffer[256];
-   bzero(buffer,256);
-   n = read(sock,buffer,255);
+   char buffer[bufferlen];
+   bzero(buffer,bufferlen);
+   n = read(sock,buffer,bufferlen);
+   n = write(sock, "Hallo", 5);
    
    if (n < 0) {
       perror("Error while reading from socket");
       exit(1);
    }
    printf("Here is the message: %s\n",buffer);
-   n = write(sock,"I got your message",18);
    
    if (n < 0) {
       perror("Error while writing to socket");
       exit(1);
    }
-	
+   writeDataInFile(buffer, bufferlen);
+}
+
+void writeDataInFile(char* buffer, int bufferlen){
+    FILE *fp;
+    int i;
+
+    fp = fopen("bla.xar", "w");
+
+    if(fp == NULL) {
+            printf("Datei konnte nicht geoeffnet werden.\n");
+    }else {
+            // schreibe Zahlen
+            for(i=0; i<bufferlen; i++) {
+                    fprintf(fp, "%c", buffer[i]);
+            }
+            printf("File wurde erstellt und wurde beschrieben.\n");
+            fclose(fp);
+    }
+    
 }
 
 int main( int argc, char *argv[] ) {
@@ -36,13 +59,14 @@ int main( int argc, char *argv[] ) {
    sockfd = socket(AF_INET, SOCK_STREAM, 0);
    
    if (sockfd < 0) {
+       //sockfd = socket(AF_INET, SOCK_STREAM, 0);
       perror("Cannot open the socket");
       exit(1);
    }
    
    //Socket Struktur initialisieren
    bzero((char *) &serv_addr, sizeof(serv_addr));
-   port = 8000;
+   port = 8081;
    
    serv_addr.sin_family = AF_INET;
    serv_addr.sin_addr.s_addr = INADDR_ANY;
@@ -86,6 +110,8 @@ int main( int argc, char *argv[] ) {
       }
 		
    }
-   
-   return 1;
+   if(newsockfd != 0){
+       close(newsockfd);
+   }
+   return 0;
 }
