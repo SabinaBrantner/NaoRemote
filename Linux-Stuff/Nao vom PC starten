@@ -1,0 +1,207 @@
+sabina@sabina-VirtualBox:~$ ls
+aldebaran     ctc        examples.desktop  naoqisdk      SDKnao  Videos
+Bilder        Dokumente  fixpythonpath     Öffentlich    SDKpc   Vorlagen
+choreographe  Downloads  Musik             Schreibtisch  vbox
+sabina@sabina-VirtualBox:~$ cd SDKpc
+sabina@sabina-VirtualBox:~/SDKpc$ ls
+naoqi-sdk-linux32
+sabina@sabina-VirtualBox:~/SDKpc$ cd naoqi-sdk-linux32/
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32$ ls
+bin  etc      lib          naoqi  toolchain-pc.cmake
+doc  include  license.rtf  share  toolchain.xml
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32$ nd dox
+Die Anwendung »nd« ist momentan nicht installiert. Sie können sie durch folgende Eingabe installieren:
+sudo apt-get install nd
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32$ cd doc
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc$ ls
+contents.html        family           nao                     ref
+cpp-classindex.html  genindex.html    naoqi                   search.html
+cpp-funcindex.html   getting_started  naoqi-eventindex.html   searchindex.js
+dev                  glossary.html    naoqi-memoryindex.html  software
+_downloads           _images          news                    _static
+doxytags             index.html       objects.inv
+examples             legal            qibuild
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc$ cd examples/
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples$ ls
+audio  audiovideocapture  core  motion  python  sensors  vision
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples$ cd core
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core$ ls
+custommain  events  helloworld  module  sayhelloworld
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core$ cd sayhelloworld/
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld$ ls
+build-pctoolchain  qiproject.xml      sayhelloworld.rst
+CMakeLists.txt     sayhelloworld.cpp
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld$ cd build-pctoolchain/
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld/build-pctoolchain$ ls
+CMakeCache.txt  cmake_install.cmake  Makefile   sdk
+CMakeFiles      dependencies.cmake   path.conf
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld/build-pctoolchain$ cd sdk
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld/build-pctoolchain/sdk$ ls
+bin  qitest.json  share
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld/build-pctoolchain/sdk$ cd bin
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld/build-pctoolchain/sdk/bin$ ls
+sayhelloworld
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld/build-pctoolchain/sdk/bin$ ./sayhelloworld
+Wrong number of arguments!
+Usage: say NAO_IP
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld/build-pctoolchain/sdk/bin$ ./sayhelloworld 192.168.0.142
+[INFO ] Starting ALNetwork
+[INFO ] NAOqi is listening on 127.0.0.1:54010
+[INFO ] Stopping ALNetwork
+[INFO ] Exit
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld/build-pctoolchain/sdk/bin$ cd ..
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld/build-pctoolchain/sdk$ cd ..
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld/build-pctoolchain$ cd ..
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core/sayhelloworld$ cd ..
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/core$ cd ..
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples$ cd ..
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc$ cd ..
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32$ cd ..
+sabina@sabina-VirtualBox:~/SDKpc$ ls
+naoqi-sdk-linux32
+sabina@sabina-VirtualBox:~/SDKpc$ cd ..
+sabina@sabina-VirtualBox:~$ cd SDKnao/
+sabina@sabina-VirtualBox:~/SDKnao$ ls
+linuxcross  naoqi-sdk-linux
+sabina@sabina-VirtualBox:~/SDKnao$ cd naoqi-sdk-linux/
+bin/     doc/     etc/     include/ lib/     share/   
+sabina@sabina-VirtualBox:~/SDKnao$ cd naoqi-sdk-linux/share/
+cmake/ naoqi/ 
+sabina@sabina-VirtualBox:~/SDKnao$ cd naoqi-sdk-linux/share/naoqi/
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/share/naoqi$ ls
+robotmodels  robot_posture  vision  web
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/share/naoqi$ cd ..
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/share$ cd doc
+bash: cd: doc: Datei oder Verzeichnis nicht gefunden
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/share$ cd ..
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux$ ls
+bin  etc      lib          naoqi  toolchain-pc.cmake
+doc  include  license.rtf  share  toolchain.xml
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux$ cd doc
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc$ ls
+contents.html        family           nao                     ref
+cpp-classindex.html  genindex.html    naoqi                   search.html
+cpp-funcindex.html   getting_started  naoqi-eventindex.html   searchindex.js
+dev                  glossary.html    naoqi-memoryindex.html  software
+_downloads           _images          news                    _static
+doxytags             index.html       objects.inv
+examples             legal            qibuild
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc$ cd examples/
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples$ ls
+audio  audiovideocapture  core  motion  python  sensors  vision
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples$ cd core
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core$ ls
+custommain  events  helloworld  module  sayhelloworld
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core$ cd sayhelloworld/
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld$ ls
+build-naotoolchain  qiproject.xml      sayhelloworld.rst
+CMakeLists.txt      sayhelloworld.cpp
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld$ cd build-naotoolchain/
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld/build-naotoolchain$ ls
+CMakeCache.txt  cmake_install.cmake  Makefile   sdk
+CMakeFiles      dependencies.cmake   path.conf
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld/build-naotoolchain$ cd sdk/
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld/build-naotoolchain/sdk$ ls
+bin  qitest.json  share
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld/build-naotoolchain/sdk$ cd bin/
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld/build-naotoolchain/sdk/bin$ ls
+sayhelloworld
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld/build-naotoolchain/sdk/bin$ scp sayhelloworld nao@192.168.0.142:shw
+Password: 
+sayhelloworld                                 100%   52KB  51.7KB/s   00:00    
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld/build-naotoolchain/sdk/bin$ cd ..
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld/build-naotoolchain/sdk$ cd ..
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld/build-naotoolchain$ cd ..
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core/sayhelloworld$ cd ..
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/core$ cd ..
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples$ ls
+audio  audiovideocapture  core  motion  python  sensors  vision
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples$ cd python/
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/python$ ls
+albehaviormanager  connectionmanager  nonascii               vision
+almath             data_recording.py  reacting_to_events.py
+audio              motion             sensors
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/python$ cd audio/sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/python/audio$ ls
+audio_soundProcessing.py
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/python/audio$ less audio_soundProcessing.py 
+sabina@sabina-VirtualBox:~/SDKnao/naoqi-sdk-linux/doc/examples/python/audio$ cd ~
+sabina@sabina-VirtualBox:~$ ls
+aldebaran     ctc        examples.desktop  naoqisdk      SDKnao  Videos
+Bilder        Dokumente  fixpythonpath     Öffentlich    SDKpc   Vorlagen
+choreographe  Downloads  Musik             Schreibtisch  vbox
+sabina@sabina-VirtualBox:~$ nano robot
+sabina@sabina-VirtualBox:~$ mv robot robot.py
+sabina@sabina-VirtualBox:~$ mv robot.py SDKpc/
+naoqi-sdk-linux32/ .qi/               
+sabina@sabina-VirtualBox:~$ mv robot.py SDKpc/naoqi-sdk-linux32/
+bin/                lib/                toolchain-pc.cmake
+doc/                license.rtf         toolchain.xml
+etc/                naoqi               
+include/            share/              
+sabina@sabina-VirtualBox:~$ mv robot.py SDKpc/naoqi-sdk-linux32/doc/examples/python/
+albehaviormanager/     data_recording.py      sensors/
+almath/                motion/                vision/
+audio/                 nonascii/              
+connectionmanager/     reacting_to_events.py  
+sabina@sabina-VirtualBox:~$ mv robot.py SDKpc/naoqi-sdk-linux32/doc/examples/python/
+sabina@sabina-VirtualBox:~$ cd SDKpc/naoqi-sdk-linux32/doc/examples/python/
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ ls
+albehaviormanager  connectionmanager  nonascii               sensors
+almath             data_recording.py  reacting_to_events.py  vision
+audio              motion             robot.py
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ python robot.py 
+  File "robot.py", line 9
+    print "Fehler"
+        ^
+IndentationError: expected an indented block
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ nano robot.py 
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ python robot.py 
+Traceback (most recent call last):
+  File "robot.py", line 2, in <module>
+    managerProxy = ALProxy("ALBehaviorManager",robotIP,9559)
+NameError: name 'ALProxy' is not defined
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ ls
+albehaviormanager  connectionmanager  nonascii               sensors
+almath             data_recording.py  reacting_to_events.py  vision
+audio              motion             robot.py
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ nano data_recording.py 
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ nano robot.py 
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ nano data_recording.py 
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ nano robot.py 
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ nano data_recording.py 
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ python robot.py 
+[INFO ] Starting ALNetwork
+[INFO ] NAOqi is listening on 127.0.0.1:54010
+Traceback (most recent call last):
+  File "robot.py", line 8, in <module>
+    if getBehaviors(managerProxy) == 1:
+NameError: name 'getBehaviors' is not defined
+[INFO ] Stopping ALNetwork
+[INFO ] Exit
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ nano robot.py 
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ python robot.py 
+[INFO ] Starting ALNetwork
+[INFO ] NAOqi is listening on 127.0.0.1:54010
+[INFO ] Stopping ALNetwork
+[INFO ] Exit
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ ls
+albehaviormanager  connectionmanager  nonascii               sensors
+almath             data_recording.py  reacting_to_events.py  vision
+audio              motion             robot.py
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ scp robot.py ^C
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ nano robot.py 
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ python robot.py 
+[INFO ] Starting ALNetwork
+[INFO ] NAOqi is listening on 127.0.0.1:54010
+[INFO ] Stopping ALNetwork
+[INFO ] Exit
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ python robot.py 
+[INFO ] Starting ALNetwork
+[INFO ] NAOqi is listening on 127.0.0.1:54010
+[INFO ] Stopping ALNetwork
+[INFO ] Exit
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ shutdown -h^C
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ scp robot.py nao@192.168.0.142:runbla.py
+Password: 
+robot.py                                      100%  291     0.3KB/s   00:00    
+sabina@sabina-VirtualBox:~/SDKpc/naoqi-sdk-linux32/doc/examples/python$ nano data_recording.py 
