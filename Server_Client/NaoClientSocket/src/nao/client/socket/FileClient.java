@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -24,10 +25,10 @@ import java.util.logging.Logger;
  *
  * @author Sabina
  */
-public class FileClient implements Runnable{
+public class FileClient implements Runnable {
 
     private String path;
-    private DataOutputStream dataOutputStream;
+    private OutputStreamWriter dataOutputStream;
     private Socket socket;
     private OutputStream outputStream;
     private InputStream inputStream;
@@ -38,17 +39,17 @@ public class FileClient implements Runnable{
         this.ip = ip;
         this.port = port;
     }
-    
-    public void setPath(String path){
+
+    public void setPath(String path) {
         this.path = path;
     }
-    
-    public String getPath(){
+
+    public String getPath() {
         return this.path;
     }
-    
+
     @SuppressWarnings("SleepWhileInLoop")
-    public boolean connect(){
+    public boolean connect() {
         boolean suc = false;
         try {
             if (ip.isReachable(port)) {
@@ -57,10 +58,10 @@ public class FileClient implements Runnable{
                         socket = new Socket(ip, port);
                         inputStream = socket.getInputStream();
                         outputStream = socket.getOutputStream();
-                        dataOutputStream = new DataOutputStream(outputStream);
+                        dataOutputStream = new OutputStreamWriter(outputStream, "UTF-8");
                         System.out.println("[Client]Connected to Server, Host: " + ip + ", Port: " + port);
- //                       BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
- //                       System.out.println(reader.read());
+                        //                       BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                        //                       System.out.println(reader.read());
                         suc = true;
                     } catch (Exception e) {
                         try {
@@ -73,29 +74,41 @@ public class FileClient implements Runnable{
                 }
             }
         } catch (IOException ex) {
-           System.out.println("Ip ist nicht erreichbar");
+            System.out.println("Ip ist nicht erreichbar");
         }
         return suc;
     }
-    
-    public byte[] readFileToByteArray(){
-        byte[] input = null;
+
+    public List<String> readFileToByteArray() {
+        List<String> input = null;
         File file = new File(path);
         if (file.exists()) {
             try {
-                input = Files.readAllBytes(file.toPath());
+                input = Files.readAllLines(file.toPath());
+                for (int i = 0; i < input.size(); i++) {
+                    String bla = input.get(i);
+                    for (int j = 0; j < bla.length(); j++) {
+                        if (bla.charAt(j) < 32 || bla.charAt(j) > 126) {
+                            System.out.println("pfui" + bla.charAt(j));
+                        }
+                    }
+
+                }
             } catch (IOException ex) {
                 Logger.getLogger(NaoClientSocket.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }        
+        }
         return input;
     }
-    
-    public boolean sendBytesToServer(byte[] bytes){
+
+    public boolean sendBytesToServer(List<String> bytes) {
         boolean suc = false;
         if (bytes != null) {
             try {
-                dataOutputStream.write(bytes,0,bytes.length);
+                for (int i = 0; i < bytes.size(); i++) {
+                    dataOutputStream.write(bytes.get(i));
+                }
+                
                 System.out.println("Daten wurden erfolgreich gesendet");
                 suc = true;
             } catch (IOException ex) {
@@ -105,8 +118,8 @@ public class FileClient implements Runnable{
         }
         return suc;
     }
-    
-    public void closeAll(){
+
+    public void closeAll() {
         try {
             inputStream.close();
             dataOutputStream.close();
