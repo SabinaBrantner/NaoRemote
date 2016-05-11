@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.nao.sabina.projectnao.CheckIPAddressValidity;
 import com.nao.sabina.projectnao.R;
 
 /**
@@ -21,16 +23,21 @@ public class ConnectWithNaoFragment extends Fragment {
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_connect_with_nao,container,false);
-        Button button = (Button) v.findViewById(R.id.helpConnectionButton);
+        Button buttonHelp = (Button) v.findViewById(R.id.helpConnectionButton);
         Button buttonConnect = (Button) v.findViewById(R.id.connectButton);
+
+        final EditText ipText = (EditText)v.findViewById(R.id.ipOfNaoView);
+
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkIpValidity(v);
+                checkIPFieldEmpty(v, ipText.getText().toString());
             }
         });
-        button.setOnClickListener(new View.OnClickListener() {
+
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showConnectionHelp(v);
@@ -45,8 +52,22 @@ public class ConnectWithNaoFragment extends Fragment {
         startActivity(intent);
     }
 
-    public void checkIpValidity(View view){
-        Toast.makeText((getContext()), "Methode aufgerufen", Toast.LENGTH_SHORT).show();
-    }
+    private void checkIPFieldEmpty(View view, String ipAdress){
 
+        boolean isValid = false;
+
+        if(ipAdress.isEmpty()){
+            Toast.makeText(getContext(), "Please enter a IP-Adress!", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            //Toast.makeText(getContext(), ipAdress, Toast.LENGTH_SHORT).show();
+            CheckIPAddressValidity ipValidityChecker = new CheckIPAddressValidity(ipAdress);
+            isValid = ipValidityChecker.checkIpExists();
+
+            if(isValid){
+                Toast.makeText(getContext(), "IP-Adresse OK! :)", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
 }
