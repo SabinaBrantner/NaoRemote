@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.nao.sabina.projectnao.R;
 
@@ -22,7 +23,13 @@ public class ConnectWithNaoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_connect_with_nao,container,false);
         Button button = (Button) v.findViewById(R.id.helpConnectionButton);
-
+        Button buttonConnect = (Button) v.findViewById(R.id.connectButton);
+        buttonConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkIpValidity(v);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,6 +43,10 @@ public class ConnectWithNaoFragment extends Fragment {
     public void showConnectionHelp(View view) {
         Intent intent = new Intent(this.getActivity(), ConnectionHelpFragment.class);
         startActivity(intent);
+    }
+
+    public void checkIpValidity(View view){
+        Toast.makeText((getContext()), "Methode aufgerufen", Toast.LENGTH_SHORT).show();
     }
 
 }

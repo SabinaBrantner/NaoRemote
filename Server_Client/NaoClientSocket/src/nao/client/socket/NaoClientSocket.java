@@ -21,8 +21,8 @@ public class NaoClientSocket {
     private static String path = "C:\\Users\\Sabina\\Downloads\\behavior.xar";
     
     public static void main(String[] args) throws UnknownHostException{
-        int port = 8081;
-        InetAddress ip = InetAddress.getByName("192.168.45.50");
+        int port = 9999;
+        InetAddress ip = InetAddress.getByName("127.0.0.1");
         FileClient client = new FileClient(ip, port);
         client.setPath(path);
         Thread thread = new Thread(client);
