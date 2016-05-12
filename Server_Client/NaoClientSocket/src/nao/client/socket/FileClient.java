@@ -8,26 +8,31 @@ package nao.client.socket;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 /**
  *
  * @author Sabina
  */
-public class FileClient implements Runnable{
-
+public class FileClient implements Runnable {
     private String path;
-    private DataOutputStream dataOutputStream;
+    private OutputStreamWriter dataOutputStream;
     private Socket socket;
     private OutputStream outputStream;
     private InputStream inputStream;
@@ -38,17 +43,17 @@ public class FileClient implements Runnable{
         this.ip = ip;
         this.port = port;
     }
-    
-    public void setPath(String path){
+
+    public void setPath(String path) {
         this.path = path;
     }
-    
-    public String getPath(){
+
+    public String getPath() {
         return this.path;
     }
-    
+
     @SuppressWarnings("SleepWhileInLoop")
-    public boolean connect(){
+    public boolean connect() {
         boolean suc = false;
         try {
             if (ip.isReachable(port)) {
@@ -57,10 +62,8 @@ public class FileClient implements Runnable{
                         socket = new Socket(ip, port);
                         inputStream = socket.getInputStream();
                         outputStream = socket.getOutputStream();
-                        dataOutputStream = new DataOutputStream(outputStream);
+                        dataOutputStream = new OutputStreamWriter(outputStream, StandardCharsets.US_ASCII);
                         System.out.println("[Client]Connected to Server, Host: " + ip + ", Port: " + port);
- //                       BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
- //                       System.out.println(reader.read());
                         suc = true;
                     } catch (Exception e) {
                         try {
@@ -73,29 +76,59 @@ public class FileClient implements Runnable{
                 }
             }
         } catch (IOException ex) {
-           System.out.println("Ip ist nicht erreichbar");
+            System.out.println("Ip ist nicht erreichbar");
         }
         return suc;
     }
-    
-    public byte[] readFileToByteArray(){
-        byte[] input = null;
-        File file = new File(path);
-        if (file.exists()) {
-            try {
-                input = Files.readAllBytes(file.toPath());
-            } catch (IOException ex) {
-                Logger.getLogger(NaoClientSocket.class.getName()).log(Level.SEVERE, null, ex);
+
+    public List<String> readFile() {
+        BufferedReader in = null;
+        List<String> inputList = new ArrayList<String>();
+        int size = 0;
+        try {
+            List<String> bla = null;
+            File file = new File(path);
+            
+            if (file.exists()) {
+                try {
+                    
+                    bla = Files.readAllLines(file.toPath());
+                    size = bla.size();
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(NaoClientSocket.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(this.path), "UTF8"));
+            String input = in.readLine();
+            while(inputList.size() < size){
+                inputList.add(input);
+                input = in.readLine();
             }
-        }        
-        return input;
-    }
-    
-    public boolean sendBytesToServer(byte[] bytes){
-        boolean suc = false;
-        if (bytes != null) {
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(FileClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FileClient.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             try {
-                dataOutputStream.write(bytes,0,bytes.length);
+                in.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FileClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return inputList;
+    }
+
+    public boolean sendFileToServer(List<String> fileLines) {
+        boolean suc = false;
+        if (fileLines != null) {
+            try {
+                for (int i = 0; i < fileLines.size(); i++) {
+                    dataOutputStream.write(fileLines.get(i) + "\n");
+                }
+                
                 System.out.println("Daten wurden erfolgreich gesendet");
                 suc = true;
             } catch (IOException ex) {
@@ -105,8 +138,8 @@ public class FileClient implements Runnable{
         }
         return suc;
     }
-    
-    public void closeAll(){
+
+    public void closeAll() {
         try {
             inputStream.close();
             dataOutputStream.close();
@@ -120,7 +153,7 @@ public class FileClient implements Runnable{
     @Override
     public void run() {
         if (connect()) {
-            sendBytesToServer(readFileToByteArray());
+            sendFileToServer(readFile());
         }
     }
 }
