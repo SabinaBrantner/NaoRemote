@@ -139,6 +139,7 @@ bool handle(int sock) {
                 }
             }
 */
+            printf(buffer);
             suc = writeDataInFile(buffer, n);
             n = read(sock, buffer, bufferlen);
         }
@@ -171,7 +172,6 @@ bool writeDataInFile(char* buffer, int len) {
             printf("Error while writing in File");
             return false;
         }
-        fprintf(fp, "\n");
         fclose(fp);
     }
     return true;

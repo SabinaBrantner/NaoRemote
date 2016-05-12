@@ -8,25 +8,29 @@ package nao.client.socket;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 /**
  *
  * @author Sabina
  */
 public class FileClient implements Runnable {
-
     private String path;
     private OutputStreamWriter dataOutputStream;
     private Socket socket;
@@ -58,10 +62,8 @@ public class FileClient implements Runnable {
                         socket = new Socket(ip, port);
                         inputStream = socket.getInputStream();
                         outputStream = socket.getOutputStream();
-                        dataOutputStream = new OutputStreamWriter(outputStream, "UTF-8");
+                        dataOutputStream = new OutputStreamWriter(outputStream, StandardCharsets.US_ASCII);
                         System.out.println("[Client]Connected to Server, Host: " + ip + ", Port: " + port);
-                        //                       BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                        //                       System.out.println(reader.read());
                         suc = true;
                     } catch (Exception e) {
                         try {
@@ -79,34 +81,52 @@ public class FileClient implements Runnable {
         return suc;
     }
 
-    public List<String> readFileToByteArray() {
-        List<String> input = null;
-        File file = new File(path);
-        if (file.exists()) {
-            try {
-                input = Files.readAllLines(file.toPath());
-                for (int i = 0; i < input.size(); i++) {
-                    String bla = input.get(i);
-                    for (int j = 0; j < bla.length(); j++) {
-                        if (bla.charAt(j) < 32 || bla.charAt(j) > 126) {
-                            System.out.println("pfui" + bla.charAt(j));
-                        }
-                    }
-
+    public List<String> readFile() {
+        BufferedReader in = null;
+        List<String> inputList = new ArrayList<String>();
+        int size = 0;
+        try {
+            List<String> bla = null;
+            File file = new File(path);
+            
+            if (file.exists()) {
+                try {
+                    
+                    bla = Files.readAllLines(file.toPath());
+                    size = bla.size();
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(NaoClientSocket.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } 
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(this.path), "UTF8"));
+            String input = in.readLine();
+            while(inputList.size() < size){
+                inputList.add(input);
+                input = in.readLine();
+            }
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(FileClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FileClient.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                in.close();
             } catch (IOException ex) {
-                Logger.getLogger(NaoClientSocket.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FileClient.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return input;
+        return inputList;
     }
 
-    public boolean sendBytesToServer(List<String> bytes) {
+    public boolean sendFileToServer(List<String> fileLines) {
         boolean suc = false;
-        if (bytes != null) {
+        if (fileLines != null) {
             try {
-                for (int i = 0; i < bytes.size(); i++) {
-                    dataOutputStream.write(bytes.get(i));
+                for (int i = 0; i < fileLines.size(); i++) {
+                    dataOutputStream.write(fileLines.get(i) + "\n");
                 }
                 
                 System.out.println("Daten wurden erfolgreich gesendet");
@@ -133,7 +153,7 @@ public class FileClient implements Runnable {
     @Override
     public void run() {
         if (connect()) {
-            sendBytesToServer(readFileToByteArray());
+            sendFileToServer(readFile());
         }
     }
 }
