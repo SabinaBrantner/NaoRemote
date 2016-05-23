@@ -8,6 +8,15 @@
 #include <string.h>
 #include <dirent.h>
 #include <stdbool.h>
+#include <wchar.h>
+/*
+ *P
+ * Programm erkennt nicht das wirkliche Ende eines Files oder Übertragunsproblem
+ * Programm encodiert wahrscheinlich falsch
+ * In java wird UTF8 codiert das file eingelesen 
+ * das Java Programm schickt über einen outputStreamWriter die Daten weg
+ * UTF 8 codierung ist beim outputStreamWriter angegeben
+ */
 
 bool writeDataInFile(char* buffer, int len); // Schreibt empfangene Daten in eine xar-Datei
 bool handle(int sock); // Behandelt die Socket-Verbindung (Empfangen der Daten, Schreiben)
@@ -61,6 +70,8 @@ int main(int argc, char *argv[]) {
         }
 
         //Neuen process mit jedem Client erstellen
+        
+/*
         pid = fork();
 
         if (pid < 0) {
@@ -70,6 +81,7 @@ int main(int argc, char *argv[]) {
 
 
         if (pid == 0) {
+*/
             //Der Process ist ein Client-Process
             close(sockfd);
             if (handle(newsockfd)) {
@@ -77,9 +89,11 @@ int main(int argc, char *argv[]) {
                 startStartProgram();
             }
             exit(0);
+/*
         } else {
             close(newsockfd);
         }
+*/
     }
     if (newsockfd != 0) {
         close(newsockfd);
@@ -112,11 +126,12 @@ bool directoryExists(char* path) {
 
 bool handle(int sock) {
     int n;
-    char buffer[bufferlen];
+    char buffer[bufferlen + 1];
     bool returnValue = false;
 
     bzero(buffer, bufferlen);
-    n = read(sock, buffer, bufferlen);
+    n = read(sock, buffer, bufferlen-1);
+    buffer[bufferlen] = '\0';
 
     if (n < 0) {
         perror("Error while reading from socket");
@@ -129,19 +144,11 @@ bool handle(int sock) {
         }
 
         truncateFile();
-        int i;
         while (n > 0) {
-/*
-            for (i = 0; i < bufferlen; i++) {
-                if (buffer[i] < 32 || buffer[i] > 126) {
-                    printf("pfui %d \n", buffer[i]);
-                    buffer[i] = '#';
-                }
-            }
-*/
-            printf(buffer);
+            printf("%s", buffer);
             suc = writeDataInFile(buffer, n);
-            n = read(sock, buffer, bufferlen);
+            n = read(sock, buffer, bufferlen-1);
+            buffer[n] = '\0';
         }
 
         if (n < 0 || suc == false) {
@@ -159,19 +166,20 @@ bool handle(int sock) {
 bool writeDataInFile(char* buffer, int len) {
     FILE* fp;
 
+    //fp = fopen("behavior.xar", "a");
     fp = fopen("behavior.xar", "a");
-
     if (fp == NULL) {
         printf("Datei konnte nicht geoeffnet werden.\n");
         return false;
     } else {
         int suc = 0;
         int i;
-        suc = fprintf(fp, buffer);
+        suc = fprintf(fp, "%s", buffer);
         if (suc < 0) {
             printf("Error while writing in File");
             return false;
         }
+        fflush(fp);
         fclose(fp);
     }
     return true;

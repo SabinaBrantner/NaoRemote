@@ -6,7 +6,6 @@
 package nao.client.socket;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 /**
  *
@@ -32,7 +30,7 @@ import java.util.stream.Stream;
  */
 public class FileClient implements Runnable {
     private String path;
-    private OutputStreamWriter dataOutputStream;
+    private OutputStreamWriter streamWriter;
     private Socket socket;
     private OutputStream outputStream;
     private InputStream inputStream;
@@ -62,7 +60,7 @@ public class FileClient implements Runnable {
                         socket = new Socket(ip, port);
                         inputStream = socket.getInputStream();
                         outputStream = socket.getOutputStream();
-                        dataOutputStream = new OutputStreamWriter(outputStream, StandardCharsets.US_ASCII);
+                        streamWriter = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
                         System.out.println("[Client]Connected to Server, Host: " + ip + ", Port: " + port);
                         suc = true;
                     } catch (Exception e) {
@@ -84,24 +82,12 @@ public class FileClient implements Runnable {
     public List<String> readFile() {
         BufferedReader in = null;
         List<String> inputList = new ArrayList<String>();
-        int size = 0;
+
         try {
-            List<String> bla = null;
-            File file = new File(path);
-            
-            if (file.exists()) {
-                try {
-                    
-                    bla = Files.readAllLines(file.toPath());
-                    size = bla.size();
-                    
-                } catch (IOException ex) {
-                    Logger.getLogger(NaoClientSocket.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } 
             in = new BufferedReader(new InputStreamReader(new FileInputStream(this.path), "UTF8"));
+            
             String input = in.readLine();
-            while(inputList.size() < size){
+            while(input != null){
                 inputList.add(input);
                 input = in.readLine();
             }
@@ -126,9 +112,10 @@ public class FileClient implements Runnable {
         if (fileLines != null) {
             try {
                 for (int i = 0; i < fileLines.size(); i++) {
-                    dataOutputStream.write(fileLines.get(i) + "\n");
+                    streamWriter.write(fileLines.get(i) + "\n");
+                    System.out.println(fileLines.get(i));
                 }
-                
+                streamWriter.flush();
                 System.out.println("Daten wurden erfolgreich gesendet");
                 suc = true;
             } catch (IOException ex) {
@@ -142,8 +129,7 @@ public class FileClient implements Runnable {
     public void closeAll() {
         try {
             inputStream.close();
-            dataOutputStream.close();
-            outputStream.close();
+            streamWriter.close();
             socket.close();
         } catch (IOException ex) {
             System.out.println("Schließen fehlgeschlagen");
