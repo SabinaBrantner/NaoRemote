@@ -11,8 +11,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nao.sabina.projectnao.CheckIPAddressValidity;
+import com.nao.sabina.projectnao.FileManager;
+import com.nao.sabina.projectnao.MainPage;
 import com.nao.sabina.projectnao.NetworkChecker;
 import com.nao.sabina.projectnao.R;
+
+import java.net.Socket;
 
 /**
  * ConnectWithNaoFragment
@@ -22,11 +26,17 @@ import com.nao.sabina.projectnao.R;
  */
 public class ConnectWithNaoFragment extends Fragment {
 
-    boolean connectedWithWifi = false;
+    private boolean connectedWithWifi = false;
+    private CheckIPAddressValidity validityChecker;
+    private static FileManager fileManager;
+
+    public void setArguments(FileManager fileManager){
+        this.fileManager = fileManager;
+    }
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
- 
+
         View v = inflater.inflate(R.layout.fragment_connect_with_nao,container,false);
         Button buttonHelp = (Button) v.findViewById(R.id.helpConnectionButton);
         Button buttonConnect = (Button) v.findViewById(R.id.connectButton);
@@ -58,6 +68,12 @@ public class ConnectWithNaoFragment extends Fragment {
         startActivity(intent);
     }
 
+    public Socket getSocketConnection(){
+        if (fileManager.getSocketCon() == null)
+            System.out.println("Socket is null");
+        return fileManager.getSocketCon();
+    }
+
     private void checkUserInput(View view, String ipAdress){
 
         String message = "";
@@ -66,14 +82,15 @@ public class ConnectWithNaoFragment extends Fragment {
             Toast.makeText(getContext(), "Please enter a IP-Address!", Toast.LENGTH_SHORT).show();
         }
         else{
-            CheckIPAddressValidity ipValidityChecker = new CheckIPAddressValidity(ipAdress);
-            message = ipValidityChecker.isStringIPAddress();
+            validityChecker = new CheckIPAddressValidity(ipAdress);
+            message = validityChecker.isStringIPAddress();
 
             if(message.isEmpty()){
-                message = ipValidityChecker.checkIpExists();
+                message = validityChecker.checkIpExists();
 
                 if(message.isEmpty()){
                     message = String.format("IP-Address correct");
+                    fileManager.setSocketCon(validityChecker.getSocketCon());
                 }
             }
 

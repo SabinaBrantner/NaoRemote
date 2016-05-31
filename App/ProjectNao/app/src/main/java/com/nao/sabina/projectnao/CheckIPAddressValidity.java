@@ -24,6 +24,8 @@ public class CheckIPAddressValidity extends AsyncTask<Socket, Void, JSONObject> 
     private String message = "";
     private InetAddress ip = null;
 
+    private Socket socketCon;
+
     public CheckIPAddressValidity(String host) {
         this.host = host;
     }
@@ -51,14 +53,20 @@ public class CheckIPAddressValidity extends AsyncTask<Socket, Void, JSONObject> 
         return message;
     }
 
+    public Socket getSocketCon(){
+        return this.socketCon;
+    }
+
     @Override
     protected JSONObject doInBackground(Socket... params) {
         JSONObject returnValue = null;
         try {
-            Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(ip, port), 9000);
-            socket.close();
-            message = "Port is open";
+            socketCon = new Socket();
+            socketCon.connect(new InetSocketAddress(ip, port), 9000);
+            if (socketCon.isConnected())
+                message = "Port is open and Smartphone is connected with Nao";
+            else
+                message = "Smartphone isn't connected with Nao";
         } catch (Exception ex) {
             message = "Port is not open";
         }

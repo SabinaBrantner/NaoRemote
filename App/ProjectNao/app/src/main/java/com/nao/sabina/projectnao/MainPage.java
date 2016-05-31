@@ -32,7 +32,7 @@ public class MainPage extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
+    private static FileManager fileManager = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +40,7 @@ public class MainPage extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ConnectWithNaoFragment connectWithNaoFragment = new ConnectWithNaoFragment();
+        connectWithNaoFragment.setArguments(this.fileManager);
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,connectWithNaoFragment);
         fragmentTransaction.commit();
@@ -56,7 +57,6 @@ public class MainPage extends AppCompatActivity {
             // This method will trigger on item Click of navigation menu
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-
 
                 //Checking if the item is in checked state or not, if not make it in checked state
                 if(menuItem.isChecked()) menuItem.setChecked(false);
@@ -84,6 +84,7 @@ public class MainPage extends AppCompatActivity {
                     case R.id.actionsOfNao:
                         Toast.makeText(getApplicationContext(), "Actions Selected", Toast.LENGTH_SHORT).show();
                         ActionFragment actionFragment = new ActionFragment();
+                        actionFragment.setFileManager(fileManager);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame, actionFragment);
                         fragmentTransaction.commit();

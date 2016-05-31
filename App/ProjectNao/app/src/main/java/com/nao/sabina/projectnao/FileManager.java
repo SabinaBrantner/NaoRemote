@@ -40,6 +40,14 @@ public class FileManager{
         this.ip = ip;
     }
 
+    public Socket getSocketCon(){
+        return this.socketCon;
+    }
+
+    public void setSocketCon(Socket socket){
+        this.socketCon = socket;
+    }
+
     public FileManager(Socket socket, String path){
         this.filePath = path;
         this.socketCon = socket;
@@ -66,7 +74,7 @@ public class FileManager{
                         if (this.socketCon == null) {
                             this.socketCon = new Socket(this.ip, this.port);
                         }
-                        if (this.socketCon.isConnected() == false || this.socketCon.isClosed())
+                        if (this.socketCon.isConnected() == false || this.socketCon.isClosed() == false)
                             this.socketCon.connect(this.socketCon.getRemoteSocketAddress());
                         System.out.println("Connected to Nao, Host: " + this.ip + ", Port: " + this.port);
                         suc = true;

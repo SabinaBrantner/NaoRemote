@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nao.sabina.projectnao.FileManager;
 import com.nao.sabina.projectnao.ImageAdapter;
 import com.nao.sabina.projectnao.R;
 
@@ -27,9 +28,7 @@ import com.nao.sabina.projectnao.R;
  */
 public class ActionFragment extends Fragment {
 
-    public ActionFragment() {
-        // Required empty public constructor
-    }
+    private static FileManager fileManager = null;
 
     @Nullable
     @Override
@@ -41,9 +40,34 @@ public class ActionFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String nameOfAction = view.getContentDescription().toString();
-                Toast.makeText(getContext(), nameOfAction, Toast.LENGTH_SHORT).show();
+                startAction(extractFileName(nameOfAction), nameOfAction);
             }
         });
         return v;
+    }
+
+    public void setFileManager(FileManager fileM){
+        this.fileManager = fileM;
+    }
+
+    private String extractFileName(String nameOfAction){
+        String fileName = nameOfAction.replaceAll(" ", "");
+        fileName = fileName + ".xar";
+        return fileName;
+    }
+
+    private void startAction(String fileName, String nameOfAction){
+        if (this.fileManager == null || this.fileManager.getSocketCon() == null)
+            Toast.makeText(getContext(), "Bitte verbinden Sie sich mit dem Nao", Toast.LENGTH_SHORT).show();
+        else {
+            if (this.fileManager.getSocketCon().isConnected() == false)
+                this.fileManager.openSocketConnection();
+            if (this.fileManager.getSocketCon().isConnected() == false)
+                Toast.makeText(getContext(), "Bitte verbinden Sie sich mit dem Nao", Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(getContext(), nameOfAction + "selected \n Datei wird gestartet", Toast.LENGTH_SHORT).show();
+                this.fileManager.writeFile(fileName);
+            }
+        }
     }
 }
