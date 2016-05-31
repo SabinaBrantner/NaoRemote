@@ -1,6 +1,5 @@
 package fragments;
 import android.content.Intent;
-import android.net.Network;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nao.sabina.projectnao.CheckIPAddressValidity;
-import com.nao.sabina.projectnao.NetworkConnection;
+import com.nao.sabina.projectnao.NetworkChecker;
 import com.nao.sabina.projectnao.R;
 
 /**
@@ -27,7 +26,7 @@ public class ConnectWithNaoFragment extends Fragment {
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+ 
         View v = inflater.inflate(R.layout.fragment_connect_with_nao,container,false);
         Button buttonHelp = (Button) v.findViewById(R.id.helpConnectionButton);
         Button buttonConnect = (Button) v.findViewById(R.id.connectButton);
@@ -86,7 +85,7 @@ public class ConnectWithNaoFragment extends Fragment {
         String message = "";
         boolean wifiEnabled = false;
 
-        NetworkConnection networkInformation = new NetworkConnection();
+        NetworkChecker networkInformation = new NetworkChecker();
         wifiEnabled = networkInformation.checkWifiEnabled(getContext());
 
         if(wifiEnabled){

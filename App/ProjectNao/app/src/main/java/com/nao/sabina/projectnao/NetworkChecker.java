@@ -10,7 +10,7 @@ import android.net.wifi.WifiManager;
  * Description: This class checks if the Wifi is turned on on the device.
  * If it´s connected it will be checked, if the device is connected to an Wireless-Network.
  */
-public class NetworkConnection {
+public class NetworkChecker {
 
     private String message = "";
     private boolean wifiEnabled = false;
