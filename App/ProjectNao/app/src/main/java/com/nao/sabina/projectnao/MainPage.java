@@ -15,6 +15,10 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.Socket;
+
 import fragments.ActionFragment;
 import fragments.ConnectWithNaoFragment;
 import fragments.ConnectWithPCFragment;
@@ -28,19 +32,22 @@ import fragments.NaoInfoFragment;
  * Description: This Java Class handles the UI of the app. On start, it creates a View with a Toolbar and a Fragment.
  * It implements also a Drawer which ensures that the User can handle the app easily.
  */
-public class MainPage extends AppCompatActivity {
+public class MainPage extends AppCompatActivity{
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private static FileManager fileManager = null;
+    private static FileManager fileManager;
+    private static ConnectionManager connectionManager;
+    private ConnectWithNaoFragment connectWithNaoFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main_page);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ConnectWithNaoFragment connectWithNaoFragment = new ConnectWithNaoFragment();
-        connectWithNaoFragment.setArguments(this.fileManager);
+        connectWithNaoFragment = new ConnectWithNaoFragment();
+        connectWithNaoFragment.setConnectionManager(connectionManager);
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,connectWithNaoFragment);
         fragmentTransaction.commit();
@@ -69,7 +76,8 @@ public class MainPage extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.connectWithNao:
                         Toast.makeText(getApplicationContext(), "Connect with Nao Selected", Toast.LENGTH_SHORT).show();
-                        ConnectWithNaoFragment connectWithNaoFragment = new ConnectWithNaoFragment();
+                        connectionManager = connectWithNaoFragment.getConnectionManager();
+                        connectWithNaoFragment.setConnectionManager(connectionManager);
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame,connectWithNaoFragment);
                         fragmentTransaction.commit();
@@ -84,7 +92,7 @@ public class MainPage extends AppCompatActivity {
                     case R.id.actionsOfNao:
                         Toast.makeText(getApplicationContext(), "Actions Selected", Toast.LENGTH_SHORT).show();
                         ActionFragment actionFragment = new ActionFragment();
-                        actionFragment.setFileManager(fileManager);
+                        actionFragment.setConnectionManager(connectionManager);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame, actionFragment);
                         fragmentTransaction.commit();

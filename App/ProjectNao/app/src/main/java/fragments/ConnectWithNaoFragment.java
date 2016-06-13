@@ -10,13 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.nao.sabina.projectnao.CheckIPAddressValidity;
+import com.nao.sabina.projectnao.ConnectionManager;
 import com.nao.sabina.projectnao.FileManager;
-import com.nao.sabina.projectnao.MainPage;
 import com.nao.sabina.projectnao.NetworkChecker;
 import com.nao.sabina.projectnao.R;
 
+import java.net.InetAddress;
 import java.net.Socket;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * ConnectWithNaoFragment
@@ -27,12 +30,10 @@ import java.net.Socket;
 public class ConnectWithNaoFragment extends Fragment {
 
     private boolean connectedWithWifi = false;
-    private CheckIPAddressValidity validityChecker;
+    private ConnectionManager connectionManager;
+    private static Socket socketCon;
     private static FileManager fileManager;
-
-    public void setArguments(FileManager fileManager){
-        this.fileManager = fileManager;
-    }
+    private static ConnectionManager conectionManager;
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,32 +69,31 @@ public class ConnectWithNaoFragment extends Fragment {
         startActivity(intent);
     }
 
-    public Socket getSocketConnection(){
-        if (fileManager.getSocketCon() == null)
-            System.out.println("Socket is null");
-        return fileManager.getSocketCon();
+    public void setFileManager(FileManager fM){
+        fileManager = fM;
     }
+    public void setConnectionManager(ConnectionManager cM){conectionManager = cM;}
+    public ConnectionManager getConnectionManager(){return connectionManager;}
 
     private void checkUserInput(View view, String ipAdress){
-
         String message = "";
 
         if(ipAdress.isEmpty()){
             Toast.makeText(getContext(), "Please enter a IP-Address!", Toast.LENGTH_SHORT).show();
         }
         else{
-            validityChecker = new CheckIPAddressValidity(ipAdress);
-            message = validityChecker.isStringIPAddress();
-
-            if(message.isEmpty()){
-                message = validityChecker.checkIpExists();
-
-                if(message.isEmpty()){
-                    message = String.format("IP-Address correct");
-                    fileManager.setSocketCon(validityChecker.getSocketCon());
+            if(isStringIPAddress(ipAdress)){
+                if(checkIpExists(ipAdress)){
+                    connectionManager = new ConnectionManager(ipAdress);
+                    try {
+                        connectionManager.get(1000, TimeUnit.MILLISECONDS);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    connectionManager.execute();
+                    message = String.format("Verbindung wird aufgebaut");
                 }
             }
-
             Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         }
     }
@@ -113,5 +113,26 @@ public class ConnectWithNaoFragment extends Fragment {
         }else{
             Toast.makeText(getContext(), "Please turn on your Wifi", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean isStringIPAddress(String host) {
+        try {
+            InetAddress ip = InetAddress.getByName(host);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkIpExists(String host) {
+        try {
+            Process processReachability = java.lang.Runtime.getRuntime().exec("ping -c 1 " + host);
+            int value = processReachability.waitFor();
+            if (value != 0)
+                return false;
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

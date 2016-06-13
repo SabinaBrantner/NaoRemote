@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nao.sabina.projectnao.ConnectionManager;
 import com.nao.sabina.projectnao.FileManager;
 import com.nao.sabina.projectnao.ImageAdapter;
 import com.nao.sabina.projectnao.R;
@@ -29,6 +30,7 @@ import com.nao.sabina.projectnao.R;
 public class ActionFragment extends Fragment {
 
     private static FileManager fileManager = null;
+    private static ConnectionManager connectionManager;
 
     @Nullable
     @Override
@@ -50,6 +52,8 @@ public class ActionFragment extends Fragment {
         this.fileManager = fileM;
     }
 
+    public void setConnectionManager(ConnectionManager cM){connectionManager = cM;}
+
     private String extractFileName(String nameOfAction){
         String fileName = nameOfAction.replaceAll(" ", "");
         fileName = fileName + ".xar";
@@ -57,7 +61,9 @@ public class ActionFragment extends Fragment {
     }
 
     private void startAction(String fileName, String nameOfAction){
-        if (this.fileManager == null || this.fileManager.getSocketCon() == null)
+        fileManager = new FileManager(connectionManager.getSocketCon(), "behavior.xar");
+        fileManager.writeFile("behavior.xar");
+        /*if (this.fileManager == null || this.fileManager.getSocketCon() == null)
             Toast.makeText(getContext(), "Bitte verbinden Sie sich mit dem Nao", Toast.LENGTH_SHORT).show();
         else {
             if (this.fileManager.getSocketCon().isConnected() == false)
@@ -66,8 +72,9 @@ public class ActionFragment extends Fragment {
                 Toast.makeText(getContext(), "Bitte verbinden Sie sich mit dem Nao", Toast.LENGTH_SHORT).show();
             else {
                 Toast.makeText(getContext(), nameOfAction + "selected \n Datei wird gestartet", Toast.LENGTH_SHORT).show();
+                fileName = "behavior.xar";
                 this.fileManager.writeFile(fileName);
             }
-        }
+        }*/
     }
 }

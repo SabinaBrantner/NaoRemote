@@ -19,7 +19,7 @@ public class FileManager{
     private int port;
     private InetAddress ip;
     private String filePath;
-    private Socket socketCon;
+    private static Socket socketCon;
     private OutputStreamWriter streamWriter;
 
     public int getPort(){
