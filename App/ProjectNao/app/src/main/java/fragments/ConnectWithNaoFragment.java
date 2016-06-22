@@ -1,6 +1,10 @@
 package fragments;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,12 +15,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nao.sabina.projectnao.ConnectionManager;
+import com.nao.sabina.projectnao.ConnectionService;
 import com.nao.sabina.projectnao.FileManager;
 import com.nao.sabina.projectnao.NetworkChecker;
 import com.nao.sabina.projectnao.R;
 
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -35,21 +43,53 @@ public class ConnectWithNaoFragment extends Fragment {
     private static FileManager fileManager;
     private static ConnectionManager conectionManager;
 
+    private ConnectionService mService;
+    private boolean mBound = false;
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            ConnectionService.LocalBinder binder = (ConnectionService.LocalBinder) service;
+            mService = binder.getService();
+            if (mService != null)
+                mBound = true;
+            else
+                mBound = false;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
     @Nullable
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_connect_with_nao,container,false);
         Button buttonHelp = (Button) v.findViewById(R.id.helpConnectionButton);
         Button buttonConnect = (Button) v.findViewById(R.id.connectButton);
 
         final EditText ipText = (EditText)v.findViewById(R.id.ipOfNaoView);
 
+        Intent intent = new Intent(getContext(), ConnectionService.class);
+        if (mBound == false)
+            getActivity().bindService(intent, mConnection, Context.BIND_IMPORTANT);
+
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getNetworkInformation();
                 if(connectedWithWifi) {
-                    checkUserInput(v, ipText.getText().toString());
+                    if(mBound && mService.getSocket() != null){
+                        Toast.makeText(getContext(), "Mit Nao verbunden", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        checkUserInput(v, ipText.getText().toString());
+                    }
+
                 }
             }
         });
@@ -64,37 +104,39 @@ public class ConnectWithNaoFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onStop(){
+        if (mBound) {
+            getContext().unbindService(mConnection);
+            mBound = false;
+        }
+        super.onStop();
+    }
+
     public void showConnectionHelp(View view) {
         Intent intent = new Intent(this.getActivity(), ConnectionHelpFragment.class);
         startActivity(intent);
     }
 
-    public void setFileManager(FileManager fM){
-        fileManager = fM;
-    }
-    public void setConnectionManager(ConnectionManager cM){conectionManager = cM;}
-    public ConnectionManager getConnectionManager(){return connectionManager;}
-
     private void checkUserInput(View view, String ipAdress){
-        String message = "";
-
         if(ipAdress.isEmpty()){
-            Toast.makeText(getContext(), "Please enter a IP-Address!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Es wurde keine IP eingegeben", Toast.LENGTH_SHORT).show();
         }
+        else if (!isStringIPAddress(ipAdress))
+            Toast.makeText(getContext(),"Keine gültige IP", Toast.LENGTH_SHORT).show();
+        else if (!checkIpExists(ipAdress))
+            Toast.makeText(getContext(),"Keine gültige IP", Toast.LENGTH_SHORT).show();
         else{
-            if(isStringIPAddress(ipAdress)){
-                if(checkIpExists(ipAdress)){
-                    connectionManager = new ConnectionManager(ipAdress);
-                    try {
-                        connectionManager.get(1000, TimeUnit.MILLISECONDS);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    connectionManager.execute();
-                    message = String.format("Verbindung wird aufgebaut");
-                }
+            if (mBound == false) {
+                Intent intent = new Intent(this.getContext(), ConnectionService.class);
+                getContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
             }
-            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            try {
+                Toast.makeText(getContext(), "Verbindung wird aufgebaut", Toast.LENGTH_SHORT).show();
+                mService.setIp(InetAddress.getByName(ipAdress));
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
         }
     }
 
