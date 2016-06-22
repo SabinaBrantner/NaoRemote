@@ -6,7 +6,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_connect_with_nao" tools:context="fragments.ConnectWithNaoFragment">
+    tools:showIn="@layout/activity_speaking" tools:context="fragments.SpeakingFragment">
 
     <android.support.v4.view.ViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,45 +19,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/titleConnect"
-        android:id="@+id/titleConnect"
+        android:text="@string/titleSpeaking"
+        android:id="@+id/titleSpeaking"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         style="@style/TitleFontDesign"
         android:singleLine="false" />
 
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:id="@+id/pictureNaoView"
-        android:src="@mipmap/picture_of_nao"
-        android:contentDescription="@string/pictureNaoView"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/titleConnect" />
-
     <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ipOfNaoView"
-            android:hint="@string/ipOfNaoView"
-            android:layout_below="@+id/pictureNaoView"
-            android:layout_alignStart="@+id/pictureNaoView" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userInputSpeaking"
+        android:hint="@string/userInputSpeaking"
+        android:singleLine="false"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/titleSpeaking"
+        android:layout_toStartOf="@+id/speakButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/connectButton"
-        android:id="@+id/connectButton"
-        android:layout_alignTop="@+id/ipOfNaoView"
-        android:layout_toEndOf="@+id/ipOfNaoView" />
+        android:text="@string/speakButton"
+        android:id="@+id/speakButton"
+        android:contentDescription="@string/speakButton"
+        android:layout_alignTop="@+id/userInputSpeaking"
+        android:layout_alignEnd="@+id/titleSpeaking" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/helpConnectButton"
-        android:id="@+id/helpConnectionButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/helpConnectButton"
-        />
 </RelativeLayout>

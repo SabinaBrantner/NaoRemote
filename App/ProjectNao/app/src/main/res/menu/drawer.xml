@@ -38,5 +38,12 @@
             android:title="Download from Server"
             android:icon="@drawable/phone_to_server"
             />
+        <item
+            android:id="@+id/speak"
+            android:checked="false"
+            android:title="Let your Nao speak"
+        />
+            <!--android:icon="@drawable/phone_to_server"
+            />-->
     </group>
 </menu>

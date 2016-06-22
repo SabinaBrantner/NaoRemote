@@ -25,6 +25,7 @@ import fragments.ConnectWithPCFragment;
 import fragments.ConnectWithServerFragment;
 import fragments.ControllFragment;
 import fragments.NaoInfoFragment;
+import fragments.SpeakingFragment;
 
 
 /* MainPage
@@ -116,6 +117,13 @@ public class MainPage extends AppCompatActivity{
                         ConnectWithPCFragment connectWithPCFragment = new ConnectWithPCFragment();
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame, connectWithPCFragment);
+                        fragmentTransaction.commit();
+                        return true;
+                    case R.id.speak:
+                        Toast.makeText(getApplicationContext(), "Let your Nao speak Selected", Toast.LENGTH_SHORT).show();
+                        SpeakingFragment speakFragment = new SpeakingFragment();
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.frame, speakFragment);
                         fragmentTransaction.commit();
                         return true;
 
