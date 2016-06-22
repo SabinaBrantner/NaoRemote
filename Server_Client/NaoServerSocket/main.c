@@ -24,6 +24,7 @@ void truncateFile(); // Erstellt oder Löscht den Inhalt eines der xar-Datei
 bool directoryExists(char* path); // Überprüft, ob der Ordner, indem die xar-Datei gespeichert ist, existiert
 void startStartProgram(); // Ruft das Python Script auf, dass das behaviour startet
 bool action(int sock);
+bool speak(int sock);
 
 int bufferlen = 1000;
 char* naoPath = "/home/nao/behaviors/naoremote/";
@@ -137,6 +138,9 @@ bool handle(int sock) {
         if(strstr(buffer, "SET Ac") != NULL){
             returnValue = action(sock);
         }
+        if(strstr(buffer, "SET Te") != NULL){
+            returnValue = speak(sock);
+        }
         if(strstr(buffer, "GET Ba") != NULL){
             printf("blabla");
             //scanf(system(getBattery));
@@ -158,6 +162,10 @@ bool handle(int sock) {
         returnValue = false;
     }
     return returnValue;
+}
+
+bool speak(int sock){
+    return false;
 }
 
 bool action(int sock){
