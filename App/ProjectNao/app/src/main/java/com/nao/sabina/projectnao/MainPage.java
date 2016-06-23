@@ -1,7 +1,11 @@
 package com.nao.sabina.projectnao;
 
 import android.content.ClipData;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -37,9 +41,36 @@ public class MainPage extends AppCompatActivity{
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private static FileManager fileManager;
-    private static ConnectionManager connectionManager;
-    private ConnectWithNaoFragment connectWithNaoFragment;
+
+    private ConnectionService connectionService;
+    private boolean mBound = false;
+
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            ConnectionService.LocalBinder binder = (ConnectionService.LocalBinder) service;
+            connectionService = binder.getService();
+            if (connectionService != null)
+                mBound = true;
+            else
+                mBound = false;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (connectionService != null)
+            connectionService.stopService(new Intent(getBaseContext(), ConnectionService.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +78,11 @@ public class MainPage extends AppCompatActivity{
         setContentView(R.layout.fragment_main_page);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        connectWithNaoFragment = new ConnectWithNaoFragment();
-        connectWithNaoFragment.setConnectionManager(connectionManager);
+
+        Intent intent = new Intent(getBaseContext(), ConnectionService.class);
+        getBaseContext().startService(intent);
+
+        ConnectWithNaoFragment connectWithNaoFragment = new ConnectWithNaoFragment();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,connectWithNaoFragment);
         fragmentTransaction.commit();
@@ -77,8 +111,7 @@ public class MainPage extends AppCompatActivity{
                 switch (menuItem.getItemId()){
                     case R.id.connectWithNao:
                         Toast.makeText(getApplicationContext(), "Connect with Nao Selected", Toast.LENGTH_SHORT).show();
-                        connectionManager = connectWithNaoFragment.getConnectionManager();
-                        connectWithNaoFragment.setConnectionManager(connectionManager);
+                        ConnectWithNaoFragment connectWithNaoFragment = new ConnectWithNaoFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame,connectWithNaoFragment);
                         fragmentTransaction.commit();
@@ -93,7 +126,6 @@ public class MainPage extends AppCompatActivity{
                     case R.id.actionsOfNao:
                         Toast.makeText(getApplicationContext(), "Actions Selected", Toast.LENGTH_SHORT).show();
                         ActionFragment actionFragment = new ActionFragment();
-                        actionFragment.setConnectionManager(connectionManager);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame, actionFragment);
                         fragmentTransaction.commit();

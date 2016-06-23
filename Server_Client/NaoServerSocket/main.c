@@ -23,18 +23,22 @@ bool handle(int sock); // Behandelt die Socket-Verbindung (Empfangen der Daten, 
 void truncateFile(); // Erstellt oder Löscht den Inhalt eines der xar-Datei
 bool directoryExists(char* path); // Überprüft, ob der Ordner, indem die xar-Datei gespeichert ist, existiert
 void startStartProgram(); // Ruft das Python Script auf, dass das behaviour startet
+bool action(int sock);
+bool speak(int sock);
 
 int bufferlen = 1000;
 char* naoPath = "/home/nao/behaviors/naoremote/";
 char* fileName = "/home/nao/behaviors/naoremote/behavior.xar";
 const char* installPython = "python runbla.py naoremote";
 const char* startPython = "python run.py naoremote";
+const char* getBattery = "python getBattery.py";
+const char* getName = "python getData.py";
 int port = 9999;
 
 int main(int argc, char *argv[]) {
     int sockfd, newsockfd, n, pid;
     socklen_t clilen;
-    char buffer[256];
+    char buffer[bufferlen];
     struct sockaddr_in serv_addr, cli_addr;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -71,7 +75,6 @@ int main(int argc, char *argv[]) {
 
         //Neuen process mit jedem Client erstellen
         
-/*
         pid = fork();
 
         if (pid < 0) {
@@ -81,19 +84,16 @@ int main(int argc, char *argv[]) {
 
 
         if (pid == 0) {
-*/
+            printf("Verbindung mit Client hergestellt\n");
             //Der Process ist ein Client-Process
             close(sockfd);
-            if (handle(newsockfd)) {
-                printf("Programm starten");
-                startStartProgram();
+            while(handle(newsockfd)){
+
             }
             exit(0);
-/*
         } else {
             close(newsockfd);
         }
-*/
     }
     if (newsockfd != 0) {
         close(newsockfd);
@@ -126,6 +126,50 @@ bool directoryExists(char* path) {
 
 bool handle(int sock) {
     int n;
+    int toDoLen = 7;
+    char buffer[toDoLen + 1];
+    bool returnValue = false;
+
+    bzero(buffer, toDoLen);
+    n = read(sock, buffer, toDoLen-1);
+    if(n > 0){
+        buffer[n] = '\0';
+        printf("%s\n", buffer);
+        if(strstr(buffer, "SET Ac") != NULL){
+            returnValue = action(sock);
+        }
+        if(strstr(buffer, "SET Te") != NULL){
+            returnValue = speak(sock);
+        }
+        if(strstr(buffer, "GET Ba") != NULL){
+            printf("blabla");
+            //scanf(system(getBattery));
+            char* percent = "100";
+            n = write(sock, percent, strlen(percent));
+            returnValue = true;
+        }
+        if(strstr(buffer, "GET Na") != NULL){
+            printf("blibli");
+            //scanf(system(getName));
+            char* name = "Judy";
+            n = write(sock, name, strlen(name));
+            returnValue = true;
+        }
+        fflush(sock);
+    }
+    if(n < 0){
+        perror("Error while reading from socket");
+        returnValue = false;
+    }
+    return returnValue;
+}
+
+bool speak(int sock){
+    return false;
+}
+
+bool action(int sock){
+    int n;
     char buffer[bufferlen + 1];
     bool returnValue = false;
 
@@ -136,7 +180,8 @@ bool handle(int sock) {
     if (n < 0) {
         perror("Error while reading from socket");
         exit(1);
-    } else {
+    } 
+    else {
         bool suc = true;
         if (false)//(!directoryExists())
         {
@@ -144,19 +189,31 @@ bool handle(int sock) {
         }
 
         truncateFile();
-        while (n > 0) {
+        bool nextTimeEnd = false;
+        bool end = false;
+        while (n > 0 && end == false) {
             printf("%s", buffer);
             suc = writeDataInFile(buffer, n);
-            n = read(sock, buffer, bufferlen-1);
+            if(nextTimeEnd){
+                end = true;
+            }
+            else
+                n = read(sock, buffer, bufferlen-1);
+            if(strstr(buffer, "</ChoregrapheProject>") != NULL){
+                nextTimeEnd = true;
+            }
             buffer[n] = '\0';
         }
 
         if (n < 0 || suc == false) {
             truncateFile();
             perror("Error while reading from socket");
-            exit(1);
-        } else {
+            returnValue = false;
+        } 
+        else {
             printf("File wurde erstellt und wurde beschrieben.\n");
+            printf("Programm starten");
+            startStartProgram();
             returnValue = true;
         }
     }

@@ -31,5 +31,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nao.sabina.projectnao.MainPage" />
         </activity>
+        <service android:name="ConnectionService" />
     </application>
 </manifest>
