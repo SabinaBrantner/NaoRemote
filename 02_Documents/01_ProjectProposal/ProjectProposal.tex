@@ -1,0 +1,221 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{epstopdf}
+\usepackage[utf8]{inputenc}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+
+\newenvironment{explanation}{%
+   \setlength{\parindent}{0pt}
+   \itshape
+   \color{blue}
+}{}
+
+\newcommand{\projectname}{Nao Soccer}
+\newcommand{\productname}{Nao Soccer}
+\newcommand{\projectleader}{Viktoria Streibl, Melanie Mühleder, Sabina Brantner}
+\newcommand{\documentstatus}{In progress}
+%\newcommand{\documentstatus}{Submitted}
+%\newcommand{\documentstatus}{Released}
+\newcommand{\version}{V. 1.0}
+\newcommand{\unclear}[1]{\vspace{.5em}\parbox{.9\linewidth}{\color{red}{\bf Remark: #1}}\vspace{.5em}}
+
+\begin{document}
+\begin{titlepage}
+\begin{flushright}
+%\includegraphics[scale=.5]{htlleondinglogo.png}\\
+\end{flushright}
+
+\vspace{10em}
+
+\begin{center}
+{\Huge Project Proposal} \\[3em]
+{\LARGE \productname} \\[3em]
+\end{center}
+
+\begin{flushleft}
+\begin{tabular}{|l|l|}
+\hline
+Project Name & \projectname \\ \hline
+Project Leader & \projectleader \\ \hline
+Document state & \documentstatus \\ \hline
+Version & \version \\ \hline
+\end{tabular}
+\end{flushleft}
+
+\end{titlepage}
+\section*{Revisions}
+\begin{tabular}{|p{.2\linewidth}|p{.3\linewidth}|p{.42\linewidth}|}
+\hline
+\cellcolor[gray]{0.5}\textcolor{white}{Date} & \cellcolor[gray]{0.45}\textcolor{white}{Author} & \cellcolor[gray]{0.5}\textcolor{white}{Change} \\ \hline
+August 17, 2016&V. Streibl, M. Mühleder, S. Brantner, P. Bauer&First version \\ \hline
+August 18, 2016&P. Bauer&Wording \\ \hline
+\end{tabular}
+\pagebreak
+
+\tableofcontents
+\pagebreak
+
+\section{Introduction}
+
+\section{Initial Situation}
+In the past the HTL Leonding had already successfully taken part in RoboCup competitions. During the years 2008 to 2010 some awards were won in the MiroSot league. In the meanwhile the competitions changed significantly and a good part of them nowadays focus on soccer for humanoid robots. Therefore our school purchased three Nao robots~\cite{softbank_robotics_who_2016} during the years 2009 and 2010 to evaluate the possibility to participate in the new competitions.
+
+From this time onwards several student projects were done to get more expertise in this field but until now it was impossible to get a software done which would be competitive in the RoboCup challenges. Last year we have taken over this field, have collected the available software and since then try to establish a working code base which facilitates general demonstration tasks, on the one hand und could be a promising software to apply for the RoboCup challenges of 2017 and/or 2018, on the other hand.
+
+In particular a server holding Nao apps and an Android app by which these apps can be downloaded to the Nao easily was developed. This software will be used during the next official event of our school where the Naos are traditionally an important eye catcher.
+ 
+\section{General Conditions and Constraints}
+\subsection{Organizational}
+% Welcher Rahmen steht uns zur Verfügung? Nur Syp oder auch Dipl?
+\subsubsection{Available Naos}
+As previously mentioned the available Naos were purchased in the years 2009 and 2010 and gained already a significant age. Particularly all the Naos ran out of maintenance support by SoftBank Robotics. Currently we are still able to work with the newer two of these robots. The oldest can hardly be used anymore since it uses an AMD GEODE CPU which is not supported by NAOqi 2.x anymore\cite{inbar_new_2014}. But it can be foreseen that also the newer robots will not be usable for a longer time anymore since from our experience it is necessary to send them for maintenance every two years in order to keep them in a workable state.
+
+\subsubsection{Due Dates}
+The following table gives an overview of the most important due dates for the next year:
+
+\begin{tabular}{p{.21\linewidth}p{.3\linewidth}p{.42\linewidth}}
+\cellcolor[gray]{0.5}\textcolor{white}{Date} & \cellcolor[gray]{0.43}\textcolor{white}{Event} & \cellcolor[gray]{0.5}\textcolor{white}{Remarks} \\ \hline
+October 12 to October 15, 2016 & Messe ``Jugend und Beruf'' 2016 & Fair where our school takes part in and where the Naos are used to attract new students. \\
+November 1, 2016 & Official release of call for application and rule set 2017 & Typically the rule set is more a pre-release and given as a delta to the rule set of 2016. \\
+December 1, 2016 & Due date for applications & The application for the RoboCup 2017 has to be submitted.\\
+January 23 to 25, 2017 & ``Tag der offenen Tür'' & Open house at our school to present the best to interested new students.\\
+June 27 to 30, 2017 & RoboCup 2017, Nagoya, Japan & The next years competition
+\end{tabular}
+
+It has to be noticed that the time frame between the official announcement of the new rule set and the due date for application is pretty narrow. Therefore, we tried to get some preview which result will be presented in section~\ref{sec:technical}.
+
+According to the {\em Call for Application for Participation} of last year~\cite{robocup_2016_standard_platform_league_call_2015} the core part of the application has to be a video which demonstrates the ability of the team to play soccer. The footage of a length of max. five minutes has to show at least one robot attempting to kick off and score. Furthermore it is very likely that the technical committee of the RoboCup wants to get a live demonstration of the soccer capabilities via a live telephone conference which is expected to take place in the first half of December 2016.
+
+\subsection{Technical}\label{sec:technical}
+\begin{itemize}
+	\item We plan to participate only in the Indoor Competition.
+	\item Main new points to the rule set of 2016:
+	\begin{itemize}
+		\item Artificial grass
+		\item Natural lighting will become more of a factor (as we will likely either be next to windows or in an arena with natural lighting)
+	\end{itemize}
+\end{itemize}
+
+\section{Project Objectives and System Concepts}
+\begin{itemize}
+	% \item Schönes Sarkasmus-Schild
+	\item Qualification
+	\item Support the school at official events 
+	\item Participation in the competition 2017 and/or 2018
+\end{itemize}
+
+
+\subsection{Qualification}
+By start of December we have to get a software ready which controls the Nao such that it can kick a ball from the kickoff and then kick it into the goal. The whole scenario has to take place on a standard field as used for the competition. The following goals have to be achieved to accomplish this.
+\begin{itemize}
+	\item Analyses of Software used in 2016
+	\item Vision: Recognition of ball, goal(s), and lines; analysis of the capabilities of the robot cameras
+	\item Kicking the ball
+\end{itemize}
+
+\subsubsection{Analyses of Software Used in 2016}
+Since all teams taking part in the RoboCup competition are requested to publish their software we will take this and start out by analyzing the software of the best teams of the competition 2016. Here we list the teams which software we want to investigate in particular and also the reasons why we chose these teams. Although the informal preview of the rule set for 2017 states that the amount of code used from other teams may be limited, we will take as much as possible and then adapt to the actual regulations as soon as they are released.
+
+\begin{itemize}
+	\item {\em B-Human} This team won the competition 2016.
+	\item {\em U-Chile} Had a strong team and convinced during the second day of the competition 2016. Unfortunately the performance dropped significantly in the finals. We suspect a bad adaption of the vision configuration.
+	\item {\em UNSW-Australia} In this team we observed one of the most stable walks.
+	\item {\em UT-Austin} We observed a  good field scan (and therefore a pretty sophisticated self location and orientation of the Naos) and the indoor walk is more stable than the walk of UNSW-Australia
+\end{itemize}
+
+\subsubsection{Vision}
+A crucial part of the whole player software is the vision system. The hard part is to distinguish between the field lines, the goal, the ball, and the Naos which are all (more or less) white colored. The standard image detection/recognition library used on the Naos is OpenCv. It will be necessary to get in a good command of this library and the techniques it provides.
+
+Furthermore it is assumed to be helpful to get a good understanding of the constraints of the camera hardware on the Naos. We want to understand within which distances the Naos are able to recognize a ball, a goal, another robot, etc.
+
+\subsubsection{Kicking the Ball}
+Analysis of the competition 2016 has shown that several teams had troubles to keep the Naos in balance when they were kicking. So it is the main goal here to keep the Naos stable when they kick. 
+
+\subsection{Support the School at Official Events}
+Besides the goals directly related to the participation in the RoboCup 2017 we will support our school by taking part in two official events of the HTL Leonding. .
+\subsubsection{Messe ``Jugend und Beruf 2016'' Wels}
+This fair will take place from October 12 to 15, 2016. Since we cannot expect to have significant software parts for playing soccer by October and, furthermore, due to space limitations at our booth we will present the project we developed during last school year. This includes the app {\em NaoRemote} to control the Naos via an Android device. Additionally we want to show some dances.
+
+\subsubsection{``Tag der offenen Tür'' at the HTL Leonding}
+At this event we already expect to have some soccer software ready to be demonstrated. At least we want to show the visitors the software to be ready for the application to the competition 2017. 
+
+\subsection{Participation in the Competition 2017 and/or 2018}
+When we win the participation in one of the competitions of the next years we need to have a fully working team of five Naos. In order to come into this position we expect the following goals to be achieved.
+
+\subsubsection{Show Robot Status}
+To quickly monitor the status of the Naos, we plan to implement some status indicators via coloring its eyes. We plan the following status:
+\\[1em]
+\unclear{In the next table: What is if the Nao sees the goal? What means the red/red status? What do you mean by ``the x/y state is necessary?}
+
+\begin{tabular}{|p{.12\linewidth}|p{.12\linewidth}|p{.68\linewidth}|}
+\hline 
+Left Eye & Right Eye & Status \\ \hline
+white & white & The Nao can't see the ball or the goal\\
+white & blue & The Nao has found the ball\\
+white & red & The Nao plans to access the ball, this is only possible if the eye was blue before\\
+blue & red & The Nao has the ball and found the goal, the white-red status is necessary \\
+red & red & The Nao kick the ball to the goal, only after the blue-red status \\ \hline
+\end{tabular}
+
+\subsubsection{Player to Player Communication}
+In order to have a basis for a useful work split between the four different team players on the field (not the goalie) it is necessary to get the status between the robots exchanged. This will be done via the local Wifi which is permitted by the rule set. We plan the following messages to be exchanged between the players.
+
+\subsubsection{Integration of GameController}
+The Naos on the field communicate with the GameController which places basic commands at the robots.
+
+\unclear{Please add some brief details to which messages from the game controller the Naos have to react}
+
+\subsubsection{Recognition of the Referee's Whistle}
+
+\subsubsection{Recognition of Obstacles}
+\unclear{Do not know what you want to tell with this paragraph. Concentrate on the question Why? and How to solve?} 
+
+The Nao has to recognize teammates, rivals and goalposts, with the two cameras on the head the robot is able to notice that and can stop before the obstacle or dodge it.
+
+\subsubsection{Self Location and Orientation on the Field}
+
+\subsubsection{Alternative Kicks}
+Some teams gained competitive advantage by having the possibility to do alternative kicks. Therefore it is planned to implement kicks to the side or kicks to the back.
+
+\subsubsection{Goal Keeper}
+We observed that many teams have their goal keepers only standing between the posts and leaving it pretty inactive. However the top teams have a more active goalie which tries actively to catch the ball or, if possible, to throw the ball out of the penalty box by using its hand. We expect to be able to handle dangerous situations in our penalty box better if we adapt this kind of behavior.
+
+\subsubsection{Long Time Tests}
+When monitoring the competition 2016 it became obvious that the top teams were able to keep their Naos stable until the end of each half time. This is not trivial since the joint temperatures raise heavily during one match. So we will have to focus on energy efficient movements to keep the joints as cool as possible, on the one hand and to save battery power, on the other hand. We expect to get most benefit by analyzing and adapting the most efficient walks from the teams of Australia and Austin, TX.
+ 
+ \unclear{I am very unsure what you want to bring into these next two subsubsections}
+\subsubsection{Penalty Shootout}
+
+\subsubsection{Entire Team}
+
+\section{Opportunities and Risks}
+\begin{itemize}
+\item Publicity for the school
+\end{itemize}
+
+The following risk have to be taken into account.
+\begin{itemize}
+\item Late release of rule set compared to due date of application
+\end{itemize}
+
+\section{Planning}
+\unclear{Please fill up with some 7 to 10 more milestones}
+
+\begin{tabular}{|p{.2\textwidth}|p{.4\textwidth}|p{.32\textwidth}|}
+\hline
+\cellcolor[gray]{0.5}\textcolor{white}{Date} & \cellcolor[gray]{0.45}\textcolor{white}{Milestone} & \cellcolor[gray]{0.5}\textcolor{white}{DoD} \\ \hline
+August 20, 2016 & Tool chain is installed on all team member's computers & Every team member can build a sample application, flash it and start it on the Nao\\ \hline
+\end{tabular}
+\bibliography{my_bibliography}{}
+\bibliographystyle{plainurl} % save alternatives are abbrvurl	alphaurl	plainurl	unsrturl
+\end{document}  
