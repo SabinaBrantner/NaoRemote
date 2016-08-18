@@ -1,0 +1,18 @@
+Hi Peter.
+
+We're glad to hear you plan to submit an application for RoboCup 2017.
+Regarding your questions, we plan to release the rulebook and the call
+for participation on November 1, 2016.
+Applications will be due on December 1st.  The application requirements will
+likely be similar to 2016, but we plan to add limitations on the extent of
+code used from other teams.
+
+We have not published any preview of rule changes for 2016.
+The changes will be relatively minor for 2017, as many teams are still
+handling seeing the black and while ball introduced in 2016.  However, we
+will be using artificial grass (similar to what was used in the 2016 Outdoor
+Competition) and natural lighting will become more of a factor (as we will
+likely either be next to windows or in an arena with natural lighting).
+
+Best regards,
+- Katie
