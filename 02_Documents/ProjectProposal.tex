@@ -1,0 +1,181 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{epstopdf}
+\usepackage[utf8]{inputenc}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\newcommand{\projectname}{Nao Soccer}
+\newcommand{\productname}{Nao Soccer}
+\newcommand{\projectleader}{Viktoria Streibl, Melanie Mühleder, Sabina Brantner}
+\newcommand{\documentstatus}{In process}
+%\newcommand{\documentstatus}{Submitted}
+%\newcommand{\documentstatus}{Released}
+\newcommand{\version}{V. 1.0}
+
+\begin{document}
+\begin{titlepage}
+
+\vspace{10em}
+
+\begin{center}
+{\Huge Project Proposal} \\[3em]
+{\LARGE \productname} \\[3em]
+\end{center}
+
+\begin{flushleft}
+\begin{tabular}{|l|l|}
+\hline
+Project Name & \projectname \\ \hline
+Project Leader & \projectleader \\ \hline
+Document state & \documentstatus \\ \hline
+Version & \version \\ \hline
+\end{tabular}
+\end{flushleft}
+
+\end{titlepage}
+\section*{Revisions}
+\begin{tabular}{|l|l|l|}
+\hline
+\cellcolor[gray]{0.5}\textcolor{white}{Date} & \cellcolor[gray]{0.5}\textcolor{white}{Author} & \cellcolor[gray]{0.5}\textcolor{white}{Change} \\ \hline
+November 03, 2011&P. Bauer/T. Stuetz&First version \\ \hline
+\end{tabular}
+\pagebreak
+
+\tableofcontents
+\pagebreak
+
+\section{Introduction}
+This project is about playing soccer with NAOs, small humanoid robots. Our project goal is to participate at the RoboCup, a worldwide robot competition. There are teams of NAOs which have to play against other teams of robots at soccer. To be able to take part, there is a need of a program, which includes artificial intelligence.  At the following pages, there are some further details about the situation and competition. 
+\pagebreak
+
+\section{Initial Situation}
+We are working with the Naos since the end of the school year 2014/2015. We developed an App for controlling a Nao and we made some dances to improve our knowledge of the balance of the robot. We also visited the RoboCup 2016 in Leipzig to get an idea of Nao Soccer. 
+Through this we gain a huge knowledge and therefore we plan to establish the participation of the HTL Leonding in the RoboCup Standard Platform League. \\
+To participate in the SPL the following issues have to be solved:
+\begin{itemize}
+	\item For the NAO Standard Platform League one team needs five grey NAOs, i.e., Sue has to be replaced by a new grey robot and two more robots have to be acquired
+	\item Due to hardware issues Judy and Luc have to get repaired
+	\item The hardware of the two robots is too old and they don't get supported anymore
+	\item We need a scale playing field and a big room
+\end{itemize}
+
+\pagebreak
+
+\section{General Conditions and Constraints}
+% Welcher Rahmen steht uns zur Verfügung? Nur Syp oder auch Dipl?
+The following points are our main conditions and constraints:
+\begin{itemize}
+	\item Qualification will be done by start of December 2016
+	\item Requires 5 grey Naos
+	\item Naos probably have to deal with outdoor conditions
+	\item We only have three to five hours a week of SYP sessions 
+	\item Naos have to work autonomic
+	\item Rule book of 2017 will be released in November 2016
+\end{itemize}
+
+\pagebreak
+
+\section{Project Objectives and System Concepts}
+\begin{itemize}
+	% \item Schönes Sarkasmus-Schild
+	\item Qualification
+	\item Support the school at official events 
+	\item Participation in the competition 2017 and/or 2018
+\end{itemize}
+
+\pagebreak
+
+\subsection{Qualification}
+Currently we estimate that the dead line for the qualification will be by start of December. Within this time frame we have to get a software ready which controls the Nao such that it can kick a ball from the kickoff and then kick it into the goal. The whole scenario has to take place on a standard field as used for the competition. The following goals have to be achieved to accomplish this.
+\begin{itemize}
+	\item Analyses of Software used in 2016
+	\item Vision: Recognition of ball, goal(s), and lines; analysis of the capabilities of the robot cameras
+	\item Kicking the ball
+\end{itemize}
+
+\subsubsection{Analyses of Software used in 2016}
+All teams are requested to publish the used software. To have a good starting point we
+want to analyse the following teams: 
+\begin{itemize}
+	\item {\em B-Human} General since this team won the competition 2016
+	\item {\em U-Chile} Nice people
+	\item {\em UT-Austin} Good field scan and the walk is stabler than the walk of UNSW-Australia
+	\item {\em UNSW-Australia} Walk
+\end{itemize}
+
+\subsubsection{Vision}
+A crucial part of the whole player software is the vision system. The hard part is to distinguish between the field lines, the goal, the ball, and the Naos which are all white colored. The standard image detection/recognition library used on the Naos is OpenCv. It will be necessary to get a good command of this library and the techniques it provides. \\
+Furthermore it is assumed to be helpful to get a good understanding of the constraints of the camera hardware on the Naos. We want to understand within which distances the Naos are able to recognize a ball, a goal, a robot, etc.
+
+\subsubsection{Kicking the Ball}
+Analysis of the competition 2016 has shown that several teams hat troubles to keep the Nao's balance when kicking. So it is the main goal here to keep the Naos stable when they kick. Additionally some teams gained competitive advantage by having the possibility to do alternative kicks. Therefore it is planned to implement kicks to the side or kicks to the back.
+\pagebreak
+\subsection{Support of the School for Official Events}
+Besides the goals listed above we will support our school by taking part in two official events of the HTL Leonding. Since we cannot expect to have significant software parts by October. Furthermore due to space limitations booth we will present the project develops of last school year.
+\subsubsection{Welser Messe}
+In October we are supporting our school at the Welser Messe by showing our project from last year. This includes the app "NaoRemote" to control the Naos. Additionally we want to show some dances. 
+\subsubsection{Tag der offenen Tür}
+At the Tag der offenen Tür we also want to support our school by showing our current project effort. We want to give the visitors a demonstration to show how Nao Soccer works. 
+\pagebreak
+\subsection{Participation in the Competition 2017}
+If we participate at the competition the following points have to be done due to June 2017.
+\subsubsection{Orientation}
+Before the game begins the field is scanned by the Naos via their cameras to get a provisional coordinate system. In this system it should be easy to find the both goals, and the ball. During the game this coordinate system gets updated from the team.
+\subsubsection{Recognize the Obstacles}
+The Nao has to recognize teammates, rivals and goalposts, with the two cameras on the head the robot is able to notice that and can stop before the obstacle or dodge it.
+\subsubsection{Communication between the Players}
+The Naos have to communicate autonomic during the game. They send coordinates to each other that everyone knows where the ball and the player is. Furthermore they have to send their statuses to act ideal. 
+\subsubsection{Integration of GameController}
+The GameController is the head of the game which sends different signals to the Naos. The Naos have to react on these. Furthermore the Controller sets the game status, saves penalties, etc.
+\subsubsection{Show Robot Status}
+To notice what the Naos can see and want to do, they communicate with us via their eyes.
+There are different statuses:
+\newline \newline
+\begin{tabular}{l l}
+two white eyes & : The Nao can't see ball or the goal\\
+left white right blue & : The Nao has found the ball\\
+left white right red & : The Nao plans running to the ball, this is only possible if the eye was blue before \\
+left blue right red & : The Nao has the ball and found the goal, the white-red status is necessary \\
+left red right red & : The Nao kick the ball to the goal, only after the blue-red status \\
+\end{tabular}
+\subsubsection{Goal Keeper}
+The goal keeper recognizes the own goal and ball and defend it. If a ball is about to roll in the goal, the keeper catches it with moves like throwing itself on the ground or hunker down. \\
+When the ball gets ejected, our keeper does this by hand, since it is allowed for him to touch the ball while it is in the own penalty arena.
+\subsubsection{Recognize Whistle}
+At the start of the game the referee blows a whistle to tell the Naos that the game starts. If the Naos don't recognize the whistle sound the GameController sends a signal to start playing 15 seconds later. 
+\subsubsection{Long Time Tests}
+Their we can check if the software is considered that the Naos can play for a long time without getting hot joins and fast running out of energy. 
+\subsubsection{Penalty Shootout}
+The game is separated in two halfes which take 10 minutes. After these if the scores are the same the penalty shootout starts. How the penalty shootout works is described in the rule book \url{http://www.tzi.de/spl/pub/Website/Downloads/Rules2016.pdf}. For this process a own software has to be written for one player and for the goal keeper. 
+\subsubsection{Entire Team}
+The entire team consists of 5 grey Naos which are on the field. One of them is used as goal keeper. Additionally a sixth Nao could be used as coach. The whole team has to wear jerseys which are same colored and numbered from 2 to 6 but the goal keeper has the number 1. 
+\pagebreak
+\section{Opportunities and Risks}
+The project has the following opportunities:
+\begin{itemize}
+\item We need an entire team which causes enormous costs
+\item The different lightning conditions produce vision problems
+\item Kicking the ball causes balance problems
+\item As we saw at the RoboCup 2016 the robots had problems with the orientation
+\item The communication has to work fluently to ensure a good team play
+\item Goal keeper has to react in time
+\item Recognize and reacts on the whistle and the GameController
+\item The battery of a Nao has low capacity
+\item The Nao runs hot after a short time
+\item Qualification end is in December
+\end{itemize}
+\pagebreak
+\section{Planning}
+\begin{tabular}{|p{.3\textwidth}|p{.6\textwidth}|}
+\hline
+Date & Milestone \\ \hline
+December 1, 2016 & Qualification have to be done \\ \hline
+\end{tabular}
+\end{document}  
