@@ -82,7 +82,7 @@ This project needs a set of supporting measures:
 	\item Four more Robots for the competition. A total number of six fully working robots is necessary.
 	\item A space to work
 	\item A playing field in size and form of the fields used at the competitions
-	\item What else?
+	\item Battery
 \end{itemize}
 
 \section{Initial Situation}
@@ -103,15 +103,16 @@ As previously mentioned the available Naos were purchased in the years 2009 and 
 \subsubsection{Due Dates}
 The following table gives an overview of the most important due dates for the next year:
 
-\begin{tabular}{p{.21\linewidth}p{.3\linewidth}p{.38\linewidth}}
+\begin{tabular}{|p{.21\linewidth}|p{.3\linewidth}|p{.38\linewidth}|}
 \cellcolor[gray]{0.5}\textcolor{white}{Date} & \cellcolor[gray]{0.43}\textcolor{white}{Event} & \cellcolor[gray]{0.5}\textcolor{white}{Remarks} \\ \hline
-October 12 to October 15, 2016 & Messe ``Jugend und Beruf'' 2016 & Fair where our school takes part in and where the Naos are used to attract new students. \\
-November 1, 2016 & Official release of call for application and rule set 2017 & Typically the rule set is more a pre-release and given as a delta to the rule set of 2016. \\
-December 1, 2016 & Due date for applications & The application for the RoboCup 2017 has to be submitted.\\
-December 20, 2016 & Qualification announcement deadline & The teams who successfully qualified are announced.\\
-January 26 and 27, 2017 & ``Tag der offenen Tür'' & Open house at our school to present the best to interested new students.\\
-July 27 to 30, 2017 & RoboCup 2017, Nagoya, Japan & The next years competition
+October 12 to October 15, 2016 & Messe ``Jugend und Beruf'' 2016 & Fair where our school takes part in and where the Naos are used to attract new students. \\ \hline
+November 1, 2016 & Official release of call for application and rule set 2017 & Typically the rule set is more a pre-release and given as a delta to the rule set of 2016. \\ \hline
+December 1, 2016 & Due date for applications & The application for the RoboCup 2017 has to be submitted.\\ \hline
+December 20, 2016 & Qualification announcement deadline & The teams who successfully qualified are announced.\\ \hline
+January 26 and 27, 2017 & ``Tag der offenen Tür'' & Open house at our school to present the best to interested new students.\\ \hline
+July 27 to 30, 2017 & RoboCup 2017, Nagoya, Japan & The next years competition\\ \hline
 \end{tabular}
+\\
 
 It has to be noticed that the time frame between the official announcement of the new rule set and the due date for application is pretty narrow. Therefore, we tried to get some preview which result will be presented in section~\ref{sec:technical}.
 
@@ -171,7 +172,7 @@ A crucial part of the whole player software is the vision system. The hard part 
 Furthermore it is assumed to be helpful to get a good understanding of the constraints of the camera hardware on the Naos. We want to understand within which distances the Naos are able to recognize a ball, a goal, another robot, etc.
 
 \subsection{Support the School at Official Events}
-Besides the goals directly related to the participation in the RoboCup 2017 we will support our school by taking part in two official events of the HTL Leonding. .
+Besides the goals directly related to the participation in the RoboCup 2017 we will support our school by taking part in two official events of the HTL Leonding.
 \subsubsection{Messe ``Jugend und Beruf 2016'' Wels}
 This fair will take place from October 12 to 15, 2016. Since we cannot expect to have significant software parts for playing soccer by October and, furthermore, due to space limitations at our booth we will present the project we developed during last school year. This includes the app {\em NaoRemote} to control the Naos via an Android device. Additionally we want to show some dances.
 
@@ -188,25 +189,33 @@ Based on the work done to get qualified for the RoboCup 2017 we will have to do 
 To quickly monitor the status of the Naos, we plan to implement some status indicators via coloring its eyes. We plan the following status:
 \\[1em]
 \unclear{In the next table: What is if the Nao sees the goal? What means the red/red status? What do you mean by ``the x/y state is necessary?}
+\\
+\unclear{Please check if the state diagram is okay, and the table beneath}\\
+\includegraphics[scale=.5]{stateDiagram.png} 
 
-\begin{tabular}{|p{.12\linewidth}|p{.12\linewidth}|p{.68\linewidth}|}
-\hline 
-Left Eye & Right Eye & Status \\ \hline
-white & white & The Nao can't see the ball or the goal\\
-white & blue & The Nao has found the ball\\
-white & red & The Nao plans to access the ball, this is only possible if the eye was blue before\\
-blue & red & The Nao has the ball and found the goal, the white-red status is necessary \\
-red & red & The Nao kick the ball to the goal, only after the blue-red status \\ \hline
+\begin{tabular}{|p{.21\linewidth}|p{.3\linewidth}|p{.38\linewidth}|}
+\hline
+\cellcolor[gray]{0.5}\textcolor{white}{Shortcut} & \cellcolor[gray]{0.45}\textcolor{white}{Meaning} & \cellcolor[gray]{0.5}\textcolor{white}{Status}\\ \hline
+ww&Left and right eye are white&The Nao can't see the ball or the goal\\ \hline
+bw&Left eye blue, right eye white \\ \hline
+bb&Left and right eye are blue \\ \hline
+wb&Left eye white, right eye blue&The Nao has found the ball\\ \hline 
+rw&Left eye red, right eye white\\ \hline
+br&Left eye blue, right eye red&The Nao has the ball and found the goal, the white-red status is necessary\\ \hline
+wr&Left eye white, right eye red&The Nao plans to access the ball, this is only possible if the eye was blue before\\ \hline
+rr&Left and right eye are red&The Nao kick the ball to the goal, only after the blue-red status\\ \hline
 \end{tabular}
 
 \subsubsection{Recognition of Obstacles}
-\unclear{Do not know what you want to tell with this paragraph. Concentrate on the question Why? and How to solve?} 
+\unclear{Do not know what you want to tell with this paragraph. Concentrate on the question Why? and How to solve?} \\
 
-The Nao has to recognize teammates, rivals and goalposts, with the two cameras on the head the robot is able to notice that and can stop before the obstacle or dodge it.
+\unclear{Now we understand what you meant before, it is okay now?}
 
-\unclear{Does this fit into what you wanted to say here?}
+We have seen so far that the a essential part during a game is to detect other players, the goal post, etc. because if a robot runs into a object it mostly falls down. The currently playing teams do their image analysis based on typical edge detection strategies like convolution matrices, Canny edge detection, etc. So, it seems to be worth investigating whether the use of spectral analytical models like Fourrier transforms or Wavelets could gain any competitive advantage.
 
-As far as we have seen so far, the currently playing teams do their image analysis based on typical edge detection strategies like convolution matrices, Canny edge detection, etc. It seems to be worth investigating whether the use of spectral analytical models like Fourrier transforms or Wavelets could gain any competitive advantage.
+%\unclear{Does this fit into what you wanted to say here?}
+
+%We have seen so far, the currently playing teams do their image analysis based on typical edge detection strategies like convolution matrices, Canny edge detection, etc. It seems to be worth investigating whether the use of spectral analytical models like Fourrier transforms or Wavelets could gain any competitive advantage.
 
 \subsubsection{Player to Player Communication}
 In order to have a basis for a useful work split between the four different team players on the field (not the goalie) it is necessary to get the status between the robots exchanged. This will be done via the local Wifi which is permitted by the rule set. We consider it useful to exchange player and ball coordinates and the different status of the individual Naos.
@@ -215,9 +224,9 @@ In order to have a basis for a useful work split between the four different team
 The GameController is the head of the game and sends different signals, like game status, penalty states, etc. to the Naos. The Naos have to react on these. This part of the software is considered to be one of the less critical ones.
 
 \subsubsection{Self Location and Orientation on the Field}
-\unclear{This is hard to grasp what you want to do here}
-
-Before the game begins the field is scanned by the Naos via their cameras to get a provisional coordinate system. In this system it should be easy to find both, the goals and the ball. During the game this coordinate system gets updated from the team.
+\unclear{This is hard to grasp what you want to do here}\\
+\unclear{We also edited this section}
+At the start of the game (called 'Set') the robots have to go to their field position. The robots would be able to use a short time to scan the field from the Set phase via their camera. This means for instance that the robots know on which half they play, where the goal is located, etc. The field is for the robots like a coordinate system. During the game they are calculating where they are, where the ball is, etc. and send the coordinates to each other. So the robots are able to notice when they go into the wrong direction or anything like that. 
 
 \subsubsection{Long Time Tests}
 When monitoring the competition 2016 it became obvious that the top teams were able to keep their Naos stable until the end of each half time. This is not trivial since the joint temperatures raise heavily during one match. So we will have to focus on energy efficient movements to keep the joints as cool as possible, on the one hand and to save battery power, on the other hand. We expect to get most benefit by analyzing and adapting the most efficient walks from the teams of Australia and Austin, TX.
@@ -239,7 +248,7 @@ The game is separated in two halves each taking 10 minutes. After these if the s
 \item Attractive field of study for students of the third, fourth and fifth grade
 \end{itemize}
 
-The following risk have to be taken into account.
+The following risks have to be taken into account.
 \begin{itemize}
 \item Late release of rule set compared to due date of application
 \item Challenging topic which could get overwhelming
@@ -248,13 +257,19 @@ The following risk have to be taken into account.
 
 \section{Planning}
 \subsection{Rough Schedule}
-\unclear{Please fill up with some 7 to 10 more milestones}
 
 \begin{tabular}{|p{.2\textwidth}|p{.4\textwidth}|p{.32\textwidth}|}
 \hline
 \cellcolor[gray]{0.5}\textcolor{white}{Date} & \cellcolor[gray]{0.45}\textcolor{white}{Milestone} & \cellcolor[gray]{0.5}\textcolor{white}{DoD} \\ \hline
-August 20, 2016 & Tool chain is installed on all team member's computers & Every team member can build a sample application, flash it and start it on the Nao\\ \hline
+August 20, 2016 & Tool chain is installed on all team member's computers & Every team member can build a sample application, flash it and start it on the Nao \\ \hline
+August 31, 2016 & Update Nao to current version & Upload the new software version on the Nao and rewrite the old code \\ \hline
+September 2, 2016 & Overview of the different code parts from other teams & Every team member made a summery of the different code releases from other teams(B-Humans, UTAustin, UNSW Australia) \\ \hline
+October 12, 2016 & Rewrite the current dances to the new version & Current dances have to work on the new version, so till Welser Messe they have to be functional \\ \hline
+December 1, 2016 & Call for Application & deadline for application for participation \\ \hline
+January 26, 2016 & Tag der offenen Tuer & demonstrate our current state of the soccer project \\ \hline
+July 22, 2016 & Start of the trainee camp at the RoboCup & Everything has to work due to the start of the RoboCup\\ \hline
 \end{tabular}
+
 
 \subsection{Budget}
 Till October 2016: Two Naos, a field, four auxiliary batteries, a web site (hosting + design)
