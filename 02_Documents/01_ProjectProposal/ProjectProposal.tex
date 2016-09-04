@@ -24,8 +24,8 @@
 \newcommand{\projectname}{Nao Soccer}
 \newcommand{\productname}{Nao Soccer}
 \newcommand{\projectleader}{Viktoria Streibl, Melanie Mühleder, Sabina Brantner}
-\newcommand{\documentstatus}{In progress}
-%\newcommand{\documentstatus}{Submitted}
+%\newcommand{\documentstatus}{In progress}
+\newcommand{\documentstatus}{In review}
 %\newcommand{\documentstatus}{Released}
 \newcommand{\version}{V. 1.0}
 \newcommand{\unclear}[1]{\vspace{.5em}\parbox{.9\linewidth}{\color{red}{\bf Remark: #1}}\vspace{.5em}}
@@ -58,7 +58,7 @@ Version & \version \\ \hline
 \begin{tabular}{|p{.25\linewidth}|p{.3\linewidth}|p{.37\linewidth}|}
 \hline
 \cellcolor[gray]{0.5}\textcolor{white}{Date} & \cellcolor[gray]{0.45}\textcolor{white}{Author} & \cellcolor[gray]{0.5}\textcolor{white}{Change} \\ \hline
-September 3, 2016&V. Streibl, M. Mühleder, S. Brantner&Extended and cleared System Concepts \\ \hline
+September 4, 2016&P. Bauer&Added budget and did proof reading of overall document. \\ \hline
 September 1, 2016&V. Streibl, M. Mühleder, S. Brantner&Extended and cleared System Concepts \\ \hline
 August 31, 2016&V. Streibl, M. Mühleder, S. Brantner, P. Bauer&More content in objectives and system concepts and consolidation \\ \hline
 August 18, 2016&P. Bauer&Wording \\ \hline
@@ -117,14 +117,14 @@ As previously mentioned the available Naos were purchased in the years 2009 and 
 \subsubsection{Due Dates}
 The following table gives an overview of the most important due dates for the next year:
 
-\begin{tabular}{|p{.21\linewidth}|p{.3\linewidth}|p{.38\linewidth}|}
+\begin{tabular}{|p{.16\linewidth}|p{.3\linewidth}|p{.38\linewidth}|}
 \cellcolor[gray]{0.5}\textcolor{white}{Date} & \cellcolor[gray]{0.43}\textcolor{white}{Event} & \cellcolor[gray]{0.5}\textcolor{white}{Remarks} \\ \hline
-October 12 to October 15, 2016 & Messe ``Jugend und Beruf'' 2016 & Fair where our school takes part in and where the Naos are used to attract new students. \\ \hline
-November 1, 2016 & Official release of call for application and rule set 2017 & Typically the rule set is more a pre-release and given as a delta to the rule set of 2016. \\ \hline
-December 1, 2016 & Due date for applications & The application for the RoboCup 2017 has to be submitted.\\ \hline
-December 20, 2016 & Qualification announcement deadline & The teams who successfully qualified are announced.\\ \hline
-January 26 and 27, 2017 & ``Tag der offenen Tür'' & Open house at our school to present the best to interested new students.\\ \hline
-July 27 to 30, 2017 & RoboCup 2017, Nagoya, Japan & The next years competition\\ \hline
+Oct. 12 to 15, 2016 & Messe ``Jugend und Beruf'' 2016 & Fair where our school takes part in and where the Naos are used to attract new students. \\ \hline
+Nov. 1, 2016 & Official release of call for application and rule set 2017 & Typically the rule set is more a pre-release and given as a delta to the rule set of 2016. \\ \hline
+Dec. 1, 2016 & Due date for applications & The application for the RoboCup 2017 has to be submitted.\\ \hline
+Dec. 20, 2016 & Qualification announcement deadline & The teams who successfully qualified are announced.\\ \hline
+Jan. 26 and 27, 2017 & ``Tag der offenen Tür'' & Open house at our school to present the best to interested new students.\\ \hline
+Jul. 27 to 30, 2017 & RoboCup 2017, Nagoya, Japan & The next years competition\\ \hline
 \end{tabular}
 \\
 
@@ -201,24 +201,25 @@ If we win the participation in one of the competitions of the next years we need
 Based on the work done to get qualified for the RoboCup 2017 we will have to do optimizations concerning energy efficiency and temperature. During last years competition it became obvious that a mean energy efficiency which resulted in high joint temperatures caused a significant loss in stiffness of the joints which itself caused high instabilities of the robots. Furthermore, it was observed that some teams gained competitive advantage by having the possibility to do alternative kicks. Therefore it is planned to implement kicks to the side or kicks to the back.
 
 \subsubsection{Show Robot Status}
-To quickly monitor the status of the Naos, we plan to implement some status indicators via coloring its eyes. The following table represents some first ideas which status could be interesting to facilitate our development and how we want to indicate with two eyes colors.
-\\[1em]
-\unclear{In the next table: What is if the Nao sees the goal? What means the red/red status? What do you mean by ``the x/y state is necessary?}
-\\
-\unclear{Please check if the state diagram is okay, and the table beneath}\\
-\includegraphics[scale=.5]{stateDiagram.png} 
+To quickly monitor the status of the Naos, we plan to implement some status indicators via coloring its eyes. The following table represents some first ideas which status could be interesting to facilitate our development and how we want to indicate it with two eyes colors. The labels for the {\em Goal Recognition Status} have the following meaining:
 
-\begin{tabular}{|p{.21\linewidth}|p{.3\linewidth}|p{.38\linewidth}|}
+\begin{description}
+	\item [Cannot see] The Nao cannot see any goal.
+	\item [Can see some] The Nao can see some goal but does not know whether it is its own goal or the opponent's goal.
+	\item [Can see] The Nao can see the goal and is sure to see the opponent's goal
+\end{description}
+
+\begin{tabular}{|p{.08\linewidth}|p{.08\linewidth}|p{.31\linewidth}|p{.31\linewidth}|}
 \hline
-\cellcolor[gray]{0.5}\textcolor{white}{Shortcut} & \cellcolor[gray]{0.45}\textcolor{white}{Meaning} & \cellcolor[gray]{0.5}\textcolor{white}{Status}\\ \hline
-ww&Left and right eye are white&The Nao can't see the ball or the goal\\ \hline
-bw&Left eye blue, right eye white&The Nao has found the goal but no ball \\ \hline
-bb&Left and right eye are blue&Has found goal and ball, but to far away for kick \\ \hline
-wb&Left eye white, right eye blue&The Nao has found the ball but not the goal\\ \hline 
-rw&Left eye red, right eye white&Nao tells other teammates where the goal is \\ \hline
-br&Left eye blue, right eye red&The Nao has the ball and found the goal and it is on the way to the ball\\ \hline
-wr&Left eye white, right eye red&The Nao plans to access the ball, this is only possible if the left eye was blue before\\ \hline
-rr&Left and right eye are red&The Nao kick the ball to the goal, only after the blue-red status\\ \hline
+\cellcolor[gray]{0.5}\textcolor{white}{Left} & \cellcolor[gray]{0.45}\textcolor{white}{Right} & \cellcolor[gray]{0.5}\textcolor{white}{Ball Recognition Status} & \cellcolor[gray]{0.45}\textcolor{white}{Goal Recognition Status}\\ \hline
+White&White&Cannot see & Cannot see \\ \hline
+Blue&White&Cannot see & Can see some \\ \hline
+White&Blue&Can see & Cannot see \\ \hline 
+Blue&Blue&Can see & Can see some \\ \hline
+Red&White& Cannot see & Can see \\ \hline
+Blue&Red&Approached & Can see some \\ \hline
+White&Red&Approached & Cannot see  \\ \hline
+Red&Red& Approached & Can see \\ \hline
 \end{tabular}
 
 \subsubsection{Recognition of Obstacles}
@@ -265,15 +266,15 @@ The following risks have to be taken into account.
 \section{Planning}
 \subsection{Rough Schedule}
 
-\begin{tabular}{|p{.2\textwidth}|p{.4\textwidth}|p{.32\textwidth}|}
+\begin{tabular}{|p{.2\textwidth}|p{.32\textwidth}|p{.38\textwidth}|}
 \hline
 \cellcolor[gray]{0.5}\textcolor{white}{Date} & \cellcolor[gray]{0.45}\textcolor{white}{Milestone} & \cellcolor[gray]{0.5}\textcolor{white}{DoD} \\ \hline
 August 20, 2016 & Tool chain is installed on all team member's computers & Every team member can build a sample application, flash it and start it on the Nao \\ \hline
 August 31, 2016 & Update Nao to current version & Upload the new software version on the Nao and rewrite the old code \\ \hline
-September 2, 2016 & Overview of the different code parts from other teams & Every team member made a summery of the different code releases from other teams(B-Humans, UTAustin, UNSW Australia) \\ \hline
+September 2, 2016 & Overview of the different code parts from other teams & Every team member made a summery of the different code releases from other teams (B-Human, UTAustin, UNSW Australia) \\ \hline
 October 12, 2016 & Rewrite the current dances to the new version & Current dances have to work on the new version, so till Welser Messe they have to be functional \\ \hline
 December 1, 2016 & Call for Application & deadline for application for participation \\ \hline
-January 26, 2016 & Tag der offenen Tuer & demonstrate our current state of the soccer project \\ \hline
+January 26, 2016 & Tag der offenen Tür & demonstrate our current state of the soccer project \\ \hline
 July 22, 2016 & Start of the trainee camp at the RoboCup & Everything has to work due to the start of the RoboCup\\ \hline
 \end{tabular}
 
@@ -281,7 +282,7 @@ July 22, 2016 & Start of the trainee camp at the RoboCup & Everything has to wor
 \subsection{Budget}
 The budget is split into the two phases as described in section~\ref{sec:managementsummary}. To recall: Phase 1 is planned from now to December 10, 2016. In case we are able to successfully apply for the SPL 2017 in Nagoya the second phase would start by December 20, 2016 and last until July 27, 2017.
 \subsubsection{Phase 1}
-\begin{tabular}{|p{.6\linewidth}|r|r|r|}
+\begin{tabular}{|p{.51\linewidth}|r|r|r|}
 \hline
 \cellcolor[gray]{0.5}\textcolor{white}{Text} & \cellcolor[gray]{0.45}\textcolor{white}{Count} & \cellcolor[gray]{0.5}\textcolor{white}{Single Price} & \cellcolor[gray]{0.45}\textcolor{white}{Total} \\ \hline
 Replacement for Sue (GEODE Nao) and Luc (oldest Atom Nao) & 2 & \euro{} 6,500.00 & \euro{} 13,000.00\\ \hline
@@ -292,7 +293,7 @@ Sum &  &  & \euro{} 14,180.00 \\ \hline
 \end{tabular}
 
 \subsubsection{Phase 2}
-\begin{tabular}{|p{.6\linewidth}|r|r|r|}
+\begin{tabular}{|p{.51\linewidth}|r|r|r|}
 \hline
 \cellcolor[gray]{0.5}\textcolor{white}{Text} & \cellcolor[gray]{0.45}\textcolor{white}{Count} & \cellcolor[gray]{0.5}\textcolor{white}{Single Price} & \cellcolor[gray]{0.45}\textcolor{white}{Total} \\ \hline
 Replacement for Judy (second Atom Nao) & 2 & \euro{} 3,500.00 & \euro{} 3,500.00\\ \hline
