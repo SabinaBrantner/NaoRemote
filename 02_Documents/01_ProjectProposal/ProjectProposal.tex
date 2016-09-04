@@ -212,12 +212,12 @@ To quickly monitor the status of the Naos, we plan to implement some status indi
 \hline
 \cellcolor[gray]{0.5}\textcolor{white}{Shortcut} & \cellcolor[gray]{0.45}\textcolor{white}{Meaning} & \cellcolor[gray]{0.5}\textcolor{white}{Status}\\ \hline
 ww&Left and right eye are white&The Nao can't see the ball or the goal\\ \hline
-bw&Left eye blue, right eye white \\ \hline
-bb&Left and right eye are blue \\ \hline
-wb&Left eye white, right eye blue&The Nao has found the ball\\ \hline 
-rw&Left eye red, right eye white\\ \hline
-br&Left eye blue, right eye red&The Nao has the ball and found the goal, the white-red status is necessary\\ \hline
-wr&Left eye white, right eye red&The Nao plans to access the ball, this is only possible if the eye was blue before\\ \hline
+bw&Left eye blue, right eye white&The Nao has found the goal but no ball \\ \hline
+bb&Left and right eye are blue&Has found goal and ball, but to far away for kick \\ \hline
+wb&Left eye white, right eye blue&The Nao has found the ball but not the goal\\ \hline 
+rw&Left eye red, right eye white&Nao tells other teammates where the goal is \\ \hline
+br&Left eye blue, right eye red&The Nao has the ball and found the goal and it is on the way to the ball\\ \hline
+wr&Left eye white, right eye red&The Nao plans to access the ball, this is only possible if the left eye was blue before\\ \hline
 rr&Left and right eye are red&The Nao kick the ball to the goal, only after the blue-red status\\ \hline
 \end{tabular}
 
