@@ -25,9 +25,9 @@
 \newcommand{\productname}{Nao Soccer}
 \newcommand{\projectleader}{Viktoria Streibl, Melanie Mühleder, Sabina Brantner}
 %\newcommand{\documentstatus}{In progress}
-\newcommand{\documentstatus}{In review}
-%\newcommand{\documentstatus}{Released}
-\newcommand{\version}{V. 1.0}
+%\newcommand{\documentstatus}{In review}
+\newcommand{\documentstatus}{Released}
+\newcommand{\version}{v. 1.0}
 \newcommand{\unclear}[1]{\vspace{.5em}\parbox{.9\linewidth}{\color{red}{\bf Remark: #1}}\vspace{.5em}}
 
 \begin{document}
@@ -58,6 +58,8 @@ Version & \version \\ \hline
 \begin{tabular}{|p{.25\linewidth}|p{.3\linewidth}|p{.37\linewidth}|}
 \hline
 \cellcolor[gray]{0.5}\textcolor{white}{Date} & \cellcolor[gray]{0.45}\textcolor{white}{Author} & \cellcolor[gray]{0.5}\textcolor{white}{Change} \\ \hline
+September 10, 2016&P. Bauer&{\bf Released v1.0}. \\ \hline
+September 10, 2016&P. Bauer&Added brief description of HTL Leonding. Added clarification to the list of risks. \\ \hline
 September 5, 2016&P. Bauer&Adapted budget according to latest quote of SoftBank. \\ \hline
 September 4, 2016&P. Bauer&Added budget and did proof reading of overall document. \\ \hline
 September 1, 2016&V. Streibl, M. Mühleder, S. Brantner&Extended and cleared System Concepts \\ \hline
@@ -72,7 +74,7 @@ August 17, 2016&V. Streibl, M. Mühleder, S. Brantner, P. Bauer&First version \\
 \pagebreak
 
 \section{Management Summary}\label{sec:managementsummary}
-This proposal describes a project which should push forward the development of robotic software at the HTL Leonding. In particular we want to achieve two goals:
+This proposal describes a project which should push forward the development of robotic software at the HTL Leonding\footnote{The HTL Leonding is a technical college for students which are between 15 and 19 years old. The school runs four departments: Informatics, Media Technique, Electronics, and Healthcare Technology. The degree programs last four 5 years and the education ends with a diploma thesis.}. In particular we want to achieve two goals:
 
 \begin{itemize}
 	\item {\em Participation in the RoboCup 2017 and/or 2018.} The RoboCup is a worldwide robot competition with a number of several different disciplines. We want to participate in the so-called {\em Standard Platform League (SPL)}, which is a robot soccer league where all teams have to use a standard hardware~\cite{softbank_robotics_who_2016} and only compete in terms of different software. The software has to control the robots autonomously, i.e., that no possibilities for remote control or other external help are allowed. We plan to establish a software by December 1, 2016 to apply for the participation at the SPL 2017 . In case of a successful application it is planned to take part in the SPL 2017 at Nagoya, Japan, as the first and only school worldwide which does not have a university level.
@@ -80,7 +82,7 @@ This proposal describes a project which should push forward the development of r
 	\item {\em A significant stabilization of the demonstration software.} The Naos are a central point of the appearance of the HTL Leonding at official events. The software used so far for such events was unstable, hard to use and required a steep learning curve for students to do these demonstrations. The demonstration platform developed by the authors of this proposal during the last year shall be further stabilized and refined.
 \end{itemize}
 
-The soccer part of the project needs a set of supporting measures which can be split into two phases. Phase 1 starts immediately and has the goal to apply for the SPL 2017. The second phase will start on December 20, 2017 and has the goal to establish an effective Nao team for the SPL 2017. It has to be mentioned that Phase~2 will only start in its full form if we succeed to apply for then SPL.
+The soccer part of the project needs a set of supporting measures which can be split into two phases. Phase 1 starts immediately and has the goal to apply for the SPL 2017. The second phase will start on December 20, 2017 and has the goal to establish an effective Nao team for the SPL 2017. It has to be mentioned that Phase~2 will only start in its full form if we succeed to apply for the SPL.
 
 \begin{itemize}
 	\item Phase 1
@@ -89,7 +91,7 @@ The soccer part of the project needs a set of supporting measures which can be s
 		\item Auxiliary batteries for the robots
             	\item A playing field in size and form of the fields used at the competitions
 		\item A space to work
-            	\item Web site
+            	\item A Web site
     	\end{itemize}
 	\item Phase 2
 	\begin{itemize}
@@ -102,7 +104,7 @@ The soccer part of the project needs a set of supporting measures which can be s
 \end{itemize}
 
 \section{Initial Situation}
-The HTL Leonding is already involved in the topic of robotics since several years. One of the highlights of the efforts done in this field so far was the participation in RoboCup competitions. Especially during the years 2008 to 2010 some awards were won in the MiroSot league~\cite{fira_micro_2014}. Furthermore, robots are a central part in all official promotion events of the HTL Leonding and serve as an effective eye catcher.
+The HTL Leonding is already involved in the topic of robotics for several years. One of the highlights of the efforts done in this field so far was the participation in RoboCup competitions. Especially during the years 2008 to 2010 some awards were won in the MiroSot league~\cite{fira_micro_2014}. Furthermore, robots are a central part in all official promotion events of the HTL Leonding and serve as an effective eye catcher.
 
 In the meanwhile the RoboCup competitions changed significantly and a good part of them nowadays focus on soccer for humanoid robots. Therefore our school purchased three Nao robots~\cite{softbank_robotics_who_2016} during the years 2009 and 2010 to evaluate the possibility to participate in the new competitions called the {\em Nao Standard Platform League (SPL)}. In this league all participating teams have to use the same hardware (the Nao robots produced by SoftBank Robotics) and the teams differ only in the quality of their software. More details about the SPL can be found at~\cite{spl_standard_2016}.
 
@@ -225,7 +227,7 @@ Red&Red& Approached & Can see \\ \hline
 \end{tabular}
 
 \subsubsection{Recognition of Obstacles}
-We have seen so far that an essential part during a game is to detect other players, the goal post, etc. Because if a robot runs into an object it mostly falls down. The currently playing teams do their image analysis based on typical edge detection strategies like convolution matrices, Canny edge detection, etc. So, it seems to be worth investigating whether the use of spectral analytical models like Fourrier transforms or Wavelets could gain any competitive advantage.
+We have seen so far that an essential part during a game is to detect other players, the goal post, etc. Because if a robot runs into an object it mostly falls down. The currently playing teams do their image analysis based on typical edge detection strategies like convolution matrices, Canny edge detection, etc. So, it seems to be worth investigating whether the use of spectral analytical models like Fourier transforms or Wavelets could gain any competitive advantage.
 
 \subsubsection{Player to Player Communication}
 In order to have a basis for a useful work split between the four different team players on the field (not the goalie) it is necessary to get the status between the robots exchanged. This will be done via the local Wifi which is permitted by the rule set. We consider it useful to exchange player and ball coordinates and the different status of the individual Naos.
@@ -264,6 +266,7 @@ The following risks have to be taken into account.
 \item Challenging topic which could get overwhelming
 \item Relatively high financial input necessary
 \end{itemize}
+Although there are risks to be seen it has to be noted that the two-phases plan as outlined in this proposal includes a clear contingency plan. The budget (see section~\ref{sec:budget}) shows that the larger block of costs will appear in phase~2 of the project, which will only start if there is a clear success at project phase~1. The costs given for phase~1 would be a pending investment in any case if the school wants to continue its preference course in robotics for advanced students and still wants to rely on the Naos as a point of attraction at official events. 
 
 \section{Planning}
 \subsection{Rough Schedule}
@@ -281,7 +284,7 @@ July 22, 2016 & Start of the trainee camp at the RoboCup & Everything has to wor
 \end{tabular}
 
 
-\subsection{Budget}
+\subsection{Budget}\label{sec:budget}
 The budget is split into the two phases as described in section~\ref{sec:managementsummary}. To recall: Phase 1 is planned from now to December 10, 2016. In case we are able to successfully apply for the SPL 2017 in Nagoya the second phase would start by December 20, 2016 and last until July 27, 2017.
 \subsubsection{Phase 1}
 \begin{tabular}{|p{.51\linewidth}|r|r|r|}
