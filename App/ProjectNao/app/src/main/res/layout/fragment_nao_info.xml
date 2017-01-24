@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_columnSpan="2"
+    android:layout_rowSpan="3"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fragments.NaoInfoFragment"
+    tools:showIn="@layout/activity_nao_info">
+
+    <TextView
+        android:id="@+id/titleNaoInfo"
+        style="@style/TitleFontDesign"
+        android:text="@string/titleNaoInfo"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/helloIm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="25dp"
+        android:contentDescription="@string/helloIm"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rowCount="2"
+        android:columnCount="1"
+        android:layout_gravity="center"
+        android:layout_margin="5dp">
+        <LinearLayout
+            android:layout_row="0"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/imageBattery"
+                android:layout_gravity="center"
+                android:contentDescription="@string/batteryInfo"
+                android:layout_width="175dp"
+                android:layout_height="150dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_row="1">
+            <ImageView
+                android:id="@+id/temperatureImage"
+                android:layout_width="175dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/temperature" />
+        </LinearLayout>
+
+    </GridLayout>
+
+
+</LinearLayout>
