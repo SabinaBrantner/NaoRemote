@@ -1,0 +1,7 @@
+#Tue Jan 24 16:05:12 CET 2017
+base.0=C\:\\Users\\Sabina\\Documents\\Schule\\3AHIF\\SYP\\NaoRemote\\Source\\App\\NaoRemote\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_4bb56a692d2619293672a9ce33accac2009427ca
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=C\:\\Users\\Sabina\\Documents\\Schule\\3AHIF\\SYP\\NaoRemote\\Source\\App\\NaoRemote\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_d4e30e0d154156259fe70b539c4795d5bac8e39a\\classes.dex
+base.1=C\:\\Users\\Sabina\\Documents\\Schule\\3AHIF\\SYP\\NaoRemote\\Source\\App\\NaoRemote\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_d4e30e0d154156259fe70b539c4795d5bac8e39a
+file.0=C\:\\Users\\Sabina\\Documents\\Schule\\3AHIF\\SYP\\NaoRemote\\Source\\App\\NaoRemote\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_4bb56a692d2619293672a9ce33accac2009427ca\\classes.dex
