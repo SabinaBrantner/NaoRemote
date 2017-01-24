@@ -1,7 +1,0 @@
-/home/sabina/SDKnao/naoqi-sdk-linux/doc/examples/core/server/build-naotoolchain/CMakeFiles/install.dir
-/home/sabina/SDKnao/naoqi-sdk-linux/doc/examples/core/server/build-naotoolchain/CMakeFiles/rebuild_cache.dir
-/home/sabina/SDKnao/naoqi-sdk-linux/doc/examples/core/server/build-naotoolchain/CMakeFiles/list_install_components.dir
-/home/sabina/SDKnao/naoqi-sdk-linux/doc/examples/core/server/build-naotoolchain/CMakeFiles/server.dir
-/home/sabina/SDKnao/naoqi-sdk-linux/doc/examples/core/server/build-naotoolchain/CMakeFiles/install/local.dir
-/home/sabina/SDKnao/naoqi-sdk-linux/doc/examples/core/server/build-naotoolchain/CMakeFiles/install/strip.dir
-/home/sabina/SDKnao/naoqi-sdk-linux/doc/examples/core/server/build-naotoolchain/CMakeFiles/edit_cache.dir
